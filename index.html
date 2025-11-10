@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANBAN — Landing Page</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-sans bg-white text-gray-800">
+    <header class="py-4">
+      <div class="container mx-auto px-4 flex items-center justify-between">
+        <a href="/" class="flex items-center">
+          <div
+            class="w-36 h-10 bg-blue-150 rounded-md p-2 shadow-sm flex items-center justify-center"
+          >
+            <img src="logo.png" alt="" />
+          </div>
+        </a>
+
+        <div class="flex items-center space-x-4">
+          <a
+            href="signup.html"
+            class="text-blue-600 hover:underline hidden sm:inline"
+            >Daftar</a
+          >
+          <a
+            href="login.html"
+            class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            >Masuk</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <section class="hero text-white">
+      <div
+        class="container mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12"
+        id="bungkus"
+      >
+        <div class="md:w-6/12" id="atas">
+          <h1
+            class="title font-extrabold text-4xl md:text-6xl leading-tight mb-4"
+          >
+            Bantu Belajar<br />Bantu Bersosial
+          </h1>
+          <p class="subtitle text-lg md:text-xl mb-6 text-white/90">
+            Hallo, Ready to Learn and earn more points today?
+          </p>
+
+          <div class="flex gap-4 flex-wrap">
+            <a
+              href="#isi"
+              class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-100"
+              >Pelajari Lebih Lanjut</a
+            >
+            <a
+              href="login.html"
+              class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              >Mulai Belajar</a
+            >
+          </div>
+        </div>
+
+        <div
+          class="md:w-5/12 flex justify-center md:justify-end mt-8 md:mt-0"
+          id="gmbr"
+        >
+          <div class="hero-card relative rounded-2xl shadow-xl overflow-hidden">
+            <div class="card-bg"></div>
+            <div
+              class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center"
+            >
+              <div class="text-white text-center">
+                <div class="text-5xl mb-2">🎓</div>
+                <img src="graduation.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 px-6" id="isi">
+      <div class="container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div
+            class="big-panel rounded-xl overflow-hidden shadow-lg flex items-center"
+            data-animate
+          >
+            <div class="p-10 md:p-16 text-black w-full">
+              <div
+                class="bg-orange-100 p-8 rounded-lg h-full flex items-center justify-center"
+              >
+                <div class="text-center">
+                  <img
+                    src="belajarseru.png"
+                    alt="Belajar seru dan menyenangkan"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tiles grid grid-cols-2 gap-6" id="bungkus2">
+            <div id="bungkus3">
+              <div
+                class="tile blue-tile flex flex-col items-center justify-center p-6 rounded-xl shadow-md"
+              >
+                <div class="tile-icon mb-3 text-3xl">👥</div>
+                <div class="tile-label font-medium">Belajar Berkelompok</div>
+              </div>
+              <div
+                class="tile blue-tile flex flex-col items-center justify-center p-6 rounded-xl shadow-md text-black"
+              >
+                <div class="tile-icon mb-3 text-3xl">⏱️</div>
+                <div class="tile-label font-medium">Focus Timer</div>
+              </div>
+            </div>
+
+            <div
+              class="tile blue-tile flex flex-col items-center justify-center p-6 rounded-xl shadow-md align-items items-center"
+            >
+              <div class="text-center">
+                <div class="tile-icon text-4xl mb-3">🏆</div>
+                <div class="tile-label text-lg font-semibold">Prestasi</div>
+              </div>
+            </div>
+
+            <div
+              class="tile blue-tile flex flex-col align-items items-center items-center justify-center p-6 rounded-xl shadow-md"
+            >
+              <div class="tile-icon mb-3 text-3xl">⭐</div>
+              <div class="tile-label font-medium">Peringkat</div>
+            </div>
+            <div
+              class="tile blue-tile flex flex-col items-center justify-center p-6 rounded-xl shadow-md"
+            >
+              <div class="tile-icon mb-3 text-3xl">📚</div>
+              <div class="tile-label font-medium">Materi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 px-6 bg-gray-50" id="ulasan">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">
+          Get Quality Education
+        </h2>
+        <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+          Problem trying to resolve the conflict between the two major resims of
+          classical physics.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <img src="ulasan.png" alt="" />
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <img src="ulasan.png" alt="" />
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <img src="ulasan.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8 px-6">
+      <div class="container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="font-bold mb-4">Navigate</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-blue-300">Dashboard</a></li>
+              <li><a href="#" class="hover:text-blue-300">Focus Timer</a></li>
+              <li><a href="#" class="hover:text-blue-300">Features</a></li>
+              <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Features</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="hover:text-blue-300">Study Groups</a>
+              </li>
+              <li><a href="#" class="hover:text-blue-300">Achievement</a></li>
+              <li><a href="#" class="hover:text-blue-300">Focus Timer</a></li>
+              <li><a href="#" class="hover:text-blue-300">Leaderboard</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-blue-300">IOS & Android</a></li>
+              <li><a href="#" class="hover:text-blue-300">Watch a Demo</a></li>
+              <li><a href="#" class="hover:text-blue-300">Customers</a></li>
+              <li><a href="#" class="hover:text-blue-300">API</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Get in Touch</h3>
+            <ul class="space-y-2">
+              <li>🏫 CodeTeam - SMKN 1 Jakarta</li>
+              <li>📞 +62 812-9595-9206</li>
+              <li>🌐 philiprahmat@code-team.com</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-4 text-center text-sm">
+          All Rights Reserved 2025
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

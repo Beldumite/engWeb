@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BANBAN Login</title>
+
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-left">
+        <div class="logo">
+          <div class="logo-container">
+            <img src="logo.png" alt="BANBAN logo" />
+          </div>
+        </div>
+
+        <div class="login-header">
+          <h1>Sign in to BANBAN</h1>
+          <p>Enter your personal details and start journey with us</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn">
+            <a href="dashboard.html">SIGN IN</a>
+          </button>
+        </form>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">Atau Lanjutkan Dengan</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="social-login">
+          <button class="social-btn" aria-label="login with facebook">f</button>
+          <button class="social-btn" aria-label="login with google">G</button>
+        </div>
+
+        <div class="login-footer">
+          <p>Belum Punya Akun? <a href="signup.html">Sign Up</a></p>
+        </div>
+      </div>
+
+      <div class="login-right">
+        <div class="hero-overlay">
+          <div></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="login.js"></script>
+  </body>
+</html>

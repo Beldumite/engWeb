@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Materials — BANBAN (final)</title>
+    <link rel="stylesheet" href="materials.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="logo">
+          <img
+            src="logo.png"
+            alt="BANBAN logo"
+            onerror="this.style.opacity=.7"
+          />
+        </div>
+        <div class="email">BanBan@gmail.com</div>
+        <ul class="menu" role="navigation">
+          <li>
+            <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
+          </li>
+          <li>
+            <a href="Timer.html"><span class="ico">⏱️</span> Podomoro Timer</a>
+          </li>
+          <li>
+            <a href="studygroup.html"
+              ><span class="ico">👥</span> Study Groups</a
+            >
+          </li>
+          <li>
+            <a class="active" href="materials.html"
+              ><span class="ico">📚</span> Materials</a
+            >
+          </li>
+          <li>
+            <a href="Achivement.html"
+              ><span class="ico">🏆</span> Achievement</a
+            >
+          </li>
+          <li>
+            <a href="Profile.html"
+              ><span class="ico">⚙️</span> Settings and profile</a
+            >
+          </li>
+        </ul>
+        <div class="features-block">
+          <button class="features-btn">
+            <span>Features <span class="new">NEW</span></span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="left">
+            <button id="burger" class="burger" aria-label="Toggle sidebar">
+              ☰
+            </button>
+            <div>
+              <h1>Materials</h1>
+              <div class="subtitle">
+                Explore subjects, favorite, follow, and track progress.
+              </div>
+            </div>
+          </div>
+          <div class="controls">
+            <div class="search">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M21 21l-4.35-4.35"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="6"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                />
+              </svg>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Search materials, topics..."
+                aria-label="Search materials"
+              />
+            </div>
+            <label style="display: flex; align-items: center; gap: 8px">
+              <input id="persistToggle" type="checkbox" /><small
+                style="color: var(--muted); font-weight: 700"
+                >Persist Progress</small
+              >
+            </label>
+            <button id="favPanelBtn" class="btn">Favorites</button>
+            <button id="logoutBtn" class="btn">Logout</button>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric">
+            <strong id="totalCount">0</strong>
+            <div style="color: var(--muted)">Materials</div>
+          </div>
+          <div class="metric">
+            <strong id="favCount">0</strong>
+            <div style="color: var(--muted)">Favorites</div>
+          </div>
+          <div class="metric">
+            <strong id="overallProgress">0%</strong>
+            <div style="color: var(--muted)">Overall Progress</div>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+          "
+        >
+          <div class="cat-tabs" id="categoryTabs" role="tablist"></div>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <button id="sortBtn" class="btn">Sort A→Z</button>
+            <button id="resetBtn" class="btn">Reset Progress</button>
+          </div>
+        </div>
+        <div class="layout">
+          <section class="panel">
+            <div
+              id="materialsList"
+              class="materials-list"
+              aria-live="polite"
+            ></div>
+          </section>
+          <aside>
+            <div class="panel">
+              <h4>Favorites</h4>
+              <div id="favoritesList" class="fav-list"></div>
+              <div style="display: flex; gap: 8px; margin-top: 8px">
+                <button id="clearFavs" class="btn">Clear Favorites</button>
+                <button id="openFav" class="btn">Open Favorites</button>
+              </div>
+            </div>
+            <div class="panel" style="margin-top: 12px">
+              <h4>Quick Insights</h4>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: var(--muted)">Categories</span
+                  ><strong id="catCount">0</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: var(--muted)">Followed</span
+                  ><strong id="followedCount">0</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: var(--muted)">Avg completion</span
+                  ><strong id="avgComp">0%</strong>
+                </div>
+                <div style="margin-top: 8px; display: flex; gap: 8px">
+                  <button id="markAllDone" class="btn">
+                    Mark followed Done
+                  </button>
+                  <button disabled class="btn">Export (disabled)</button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <p style="color: var(--muted); margin-top: 12px">
+          Tip: tekan <kbd>/</kbd> untuk fokus ke pencarian. Toggle "Persist
+          Progress" jika ingin menyimpan antar-refresh.
+        </p>
+      </main>
+    </div>
+
+    <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h3 id="modalTitle">Material</h3>
+          <div><button id="modalClose" class="btn">Close</button></div>
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            align-items: flex-start;
+          "
+        >
+          <div
+            style="
+              width: 260px;
+              height: 160px;
+              border-radius: 10px;
+              overflow: hidden;
+              background: #eef6ff;
+            "
+          >
+            <img
+              id="modalImg"
+              alt=""
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+          </div>
+          <div style="flex: 1">
+            <div id="modalName" style="font-weight: 800"></div>
+            <div
+              id="modalCat"
+              style="color: var(--muted); margin-top: 6px"
+            ></div>
+            <p id="modalDesc" style="color: var(--muted); margin-top: 8px"></p>
+            <div style="display: flex; gap: 8px; margin-top: 12px">
+              <button id="modalFavBtn" class="btn">Favorite</button>
+              <button id="modalFollowBtn" class="btn">Follow</button>
+            </div>
+            <div style="margin-top: 12px" class="progress-row">
+              <div class="progress-bar" style="flex: 1">
+                <div id="modalFill" class="fill" style="width: 0%"></div>
+              </div>
+              <div class="progress-num" id="modalPct">0%</div>
+            </div>
+            <div style="margin-top: 12px; display: flex; gap: 8px">
+              <button id="incProgress" class="btn">+10%</button>
+              <button id="setDone" class="btn">Set 100%</button>
+              <button id="downloadCert" class="btn" style="display: none">
+                Download Certificate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="confettiWrap" class="confetti-wrap" aria-hidden="true"></div>
+    <script src="materials.js"></script>
+  </body>
+</html>

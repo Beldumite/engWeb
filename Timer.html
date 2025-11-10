@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Timer</title>
+    <link rel="stylesheet" href="timer.css" />
+  </head>
+  <body>
+    <div class="container">
+
+      <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="logo.png" alt="BANBAN logo" onerror="this.style.opacity=.7" />
+        </div>
+        <div class="email">BanBan@gmail.com</div>
+        <ul class="menu" role="navigation">
+            <li>
+                <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
+            </li>
+            <li>
+                <a href="Timer.html"><span class="ico">⏱</span> Podomoro Timer</a>
+            </li>
+            <li>
+                <a href="studygroup.html"><span class="ico">👥</span> Study Groups</a>
+            </li>
+            <li>
+                <a href="materials.html"><span class="ico">📚</span> Materials</a>
+            </li>
+            <li>
+                <a href="Achivement.html"><span class="ico">🏆</span> Achievement</a>
+            </li>
+            <li>
+                <a href="Profile.html"><span class="ico">⚙</span> Settings and profile</a>
+            </li>
+        </ul>
+        <div class="features-block">
+            <button class="features-btn">
+                <span>Features <span class="new">NEW</span></span>
+            </button>
+        </div>
+    </aside>
+
+      <main class="main">
+        <header class="page-top">
+          <h1 class="page-title">Focus Timer</h1>
+          <div class="toggle-group">
+            <button class="pill active" data-mode="podomoro">Podomoro</button>
+            <button class="pill" data-mode="deadlines">Deadlines</button>
+          </div>
+        </header>
+
+        <section class="timer-area">
+
+          <div class="timer-card">
+            <div class="timer-card-inner">
+              <h2 class="timer-title">Focus Time</h2>
+              <p class="cycle-text" id="cycleText">Cycle 1 of 4</p>
+
+              <div class="time-display" id="timeDisplay">25 : 00</div>
+
+              <div class="progress-wrap">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+
+              <div class="controls">
+                <button id="playPauseBtn" class="control-btn">▶</button>
+                <button id="resetBtn" class="control-btn">⟲</button>
+              </div>
+            </div>
+          </div>
+
+
+          <aside class="settings-card">
+            <div class="settings-inner">
+              <h3>Settings</h3>
+
+              <label
+                >Work Time (minutes)
+                <input type="number" id="workInput" min="1" value="25" />
+              </label>
+
+              <label
+                >Short Break (minutes)
+                <input type="number" id="shortInput" min="1" value="5" />
+              </label>
+
+              <label
+                >Long Break (minutes)
+                <input type="number" id="longInput" min="1" value="15" />
+              </label>
+
+              <label
+                >Cycles Until Long Break
+                <input type="number" id="cyclesInput" min="1" value="4" />
+              </label>
+
+              <div class="settings-actions">
+                <button id="applyBtn" class="apply-btn">Apply</button>
+                <button id="restoreBtn" class="restore-btn">
+                  Restore Defaults
+                </button>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="timer.js"></script>
+  </body>
+</html>
