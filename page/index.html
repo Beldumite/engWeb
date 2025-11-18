@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English Quiz Demo</title>
+  <script defer src="script.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f4ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .quiz-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #4a63e7;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #3545b2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-box">
+    <h2 id="question">Loading question...</h2>
+    <div id="options"></div>
+    <p id="score"></p>
+  </div>
+
+  <script>
+    // Basic quiz data
+    const quiz = [
+      {
+        question: "What is the plural form of 'child'?",
+        options: ["childs", "children", "childes", "childrens"],
+        answer: "children"
+      },
+      {
+        question: "Choose the correct article: ___ apple a day keeps the doctor away.",
+        options: ["A", "An", "The", "No article"],
+        answer: "An"
+      },
+      {
+        question: "Which one is a synonym of 'happy'?",
+        options: ["sad", "joyful", "angry", "tired"],
+        answer: "joyful"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const qElem = document.getElementById('question');
+    const optElem = document.getElementById('options');
+    const scoreElem = document.getElementById('score');
+
+    function showQuestion() {
+      const q = quiz[current];
+      qElem.textContent = q.question;
+      optElem.innerHTML = ''; // Clear old buttons
+
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(opt);
+        optElem.appendChild(btn);
+      });
+      scoreElem.textContent = `Score: ${score}/${quiz.length}`;
+    }
+
+    function checkAnswer(selected) {
+      const correct = quiz[current].answer;
+      if (selected === correct) {
+        score++;
+        alert("✅ Correct!");
+      } else {
+        alert(`❌ Wrong! The correct answer was: ${correct}`);
+      }
+
+      current++;
+      if (current < quiz.length) {
+        showQuestion();
+      } else {
+        endQuiz();
+      }
+    }
+
+    function endQuiz() {
+      qElem.textContent = "Quiz Finished!";
+      optElem.innerHTML = '';
+      scoreElem.textContent = `Final Score: ${score} / ${quiz.length}`;
+    }
+
+    // Start quiz
+    showQuestion();
+  </script>
+
+</body>
+</html>
