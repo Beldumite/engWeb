@@ -1,245 +1,853 @@
 <!DOCTYPE html>
 <html lang="id">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Materials — BANBAN (final)</title>
-    <link rel="stylesheet" href="materials.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materials - Engweb</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        min-height: 100vh;
+        background: #f5f7fa;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background: linear-gradient(180deg, #2b7db3 0%, #1a5a85 100%);
+        color: white;
+        padding: 30px 0;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .logo-sidebar {
+        background: white;
+        border-radius: 15px;
+        padding: 12px 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 20px 50px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: fit-content;
+      }
+
+      .logo-sidebar img {
+        height: 35px;
+        width: auto;
+      }
+
+   
+      .menu-item {
+        padding: 16px 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+
+      .menu-item:hover,
+      .menu-item.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+      }
+
+      .menu-item i {
+        font-size: 20px;
+        width: 24px;
+      }
+
+      .mascot {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 250px;
+        padding: 20px;
+      }
+
+      .mascot img {
+        width: 100%;
+        height: auto;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 250px;
+        padding: 40px;
+        flex: 1;
+      }
+
+      .header {
+        margin-bottom: 35px;
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 42px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+
+      .header p {
+        font-size: 15px;
+        color: #6b7280;
+        font-weight: 400;
+      }
+
+      .bubbles {
+        display: flex;
+        gap: 10px;
+      }
+
+      .bubble {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        border: 3px solid #38bdf8;
+        opacity: 0.6;
+      }
+
+      .bubble:nth-child(2) {
+        width: 60px;
+        height: 60px;
+      }
+
+      .bubble:nth-child(3) {
+        width: 70px;
+        height: 70px;
+        opacity: 0.8;
+      }
+
+      .bubble:nth-child(4) {
+        width: 90px;
+        height: 90px;
+        opacity: 1;
+        border-width: 4px;
+      }
+
+      /* Search Bar */
+      .search-container {
+        position: relative;
+        margin-bottom: 25px;
+      }
+
+      .search-bar {
+        width: 100%;
+        padding: 16px 50px 16px 50px;
+        font-size: 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 50px;
+        background: white;
+        color: #6b7280;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 18px;
+      }
+
+      .mic-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      .mic-icon:hover {
+        color: #3b82f6;
+      }
+
+      /* Sort Button */
+      .sort-button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 50px;
+        color: #6b7280;
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: auto;
+        width: fit-content;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .sort-button:hover {
+        border-color: #3b82f6;
+        color: #3b82f6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+      }
+
+      /* Sort Modal */
+      .sort-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .sort-modal.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .sort-modal-content {
+        background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        border-radius: 24px;
+        padding: 35px;
+        width: 90%;
+        max-width: 520px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        position: relative;
+        animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px) scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .modal-header {
+        position: relative;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      .modal-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        border-radius: 10px;
+      }
+
+      .modal-title {
+        font-size: 26px;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 0;
+        letter-spacing: -0.5px;
+      }
+
+      .filter-section {
+        margin-bottom: 28px;
+      }
+
+      .filter-label {
+        font-size: 15px;
+        font-weight: 600;
+        color: #e5e7eb;
+        margin-bottom: 14px;
+        display: block;
+        letter-spacing: 0.5px;
+      }
+
+      .filter-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .filter-option {
+        padding: 11px 22px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #d1d5db;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .filter-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(59, 130, 246, 0.2),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .filter-option:hover::before {
+        left: 100%;
+      }
+
+      .filter-option:hover {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+        color: #93c5fd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      }
+
+      .filter-option.active {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-color: #3b82f6;
+        color: white;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+
+      .modal-close:hover {
+        transform: rotate(90deg) scale(1.1);
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+      }
+
+      /* Material Cards Grid */
+      .materials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      .material-card {
+        background: linear-gradient(135deg, #6bb6d8 0%, #5aa3c7 100%);
+        border-radius: 20px;
+        padding: 40px 30px;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .material-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .material-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        opacity: 0.95;
+      }
+
+      .material-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        letter-spacing: -0.3px;
+      }
+
+      .material-description {
+        font-size: 14px;
+        opacity: 0.9;
+        line-height: 1.5;
+        font-weight: 300;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 80px;
+        }
+
+        .main-content {
+          margin-left: 80px;
+          padding: 20px;
+        }
+
+        .logo-sidebar,
+        .menu-item span,
+        .mascot {
+          display: none;
+        }
+
+        .menu-item {
+          justify-content: center;
+          padding: 16px;
+        }
+
+        .header h1 {
+          font-size: 32px;
+        }
+
+        .materials-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bubbles {
+          display: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="app">
-      <aside class="sidebar" id="sidebar">
-        <div class="logo">
-          <img
-            src="logo.png"
-            alt="BANBAN logo"
-            onerror="this.style.opacity=.7"
-          />
-        </div>
-        <div class="email">BanBan@gmail.com</div>
-        <ul class="menu" role="navigation">
-          <li>
-            <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
-          </li>
-          <li>
-            <a href="Timer.html"><span class="ico">⏱️</span> Podomoro Timer</a>
-          </li>
-          <li>
-            <a href="studygroup.html"
-              ><span class="ico">👥</span> Study Groups</a
-            >
-          </li>
-          <li>
-            <a class="active" href="materials.html"
-              ><span class="ico">📚</span> Materials</a
-            >
-          </li>
-          <li>
-            <a href="Achivement.html"
-              ><span class="ico">🏆</span> Achievement</a
-            >
-          </li>
-          <li>
-            <a href="Profile.html"
-              ><span class="ico">⚙️</span> Settings and profile</a
-            >
-          </li>
-        </ul>
-        <div class="features-block">
-          <button class="features-btn">
-            <span>Features <span class="new">NEW</span></span>
-          </button>
-        </div>
-      </aside>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo-sidebar">
+        <img src="logoengweb.png" alt="Engweb Logo" />
+        
+      </div>
 
-      <main class="main">
-        <div class="topbar">
-          <div class="left">
-            <button id="burger" class="burger" aria-label="Toggle sidebar">
-              ☰
-            </button>
-            <div>
-              <h1>Materials</h1>
-              <div class="subtitle">
-                Explore subjects, favorite, follow, and track progress.
-              </div>
-            </div>
-          </div>
-          <div class="controls">
-            <div class="search">
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M21 21l-4.35-4.35"
-                  stroke="#6b7280"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="6"
-                  stroke="#6b7280"
-                  stroke-width="2"
-                />
-              </svg>
-              <input
-                id="searchInput"
-                type="search"
-                placeholder="Search materials, topics..."
-                aria-label="Search materials"
-              />
-            </div>
-            <label style="display: flex; align-items: center; gap: 8px">
-              <input id="persistToggle" type="checkbox" /><small
-                style="color: var(--muted); font-weight: 700"
-                >Persist Progress</small
-              >
-            </label>
-            <button id="favPanelBtn" class="btn">Favorites</button>
-            <button id="logoutBtn" class="btn">Logout</button>
-          </div>
-        </div>
-        <div class="metrics">
-          <div class="metric">
-            <strong id="totalCount">0</strong>
-            <div style="color: var(--muted)">Materials</div>
-          </div>
-          <div class="metric">
-            <strong id="favCount">0</strong>
-            <div style="color: var(--muted)">Favorites</div>
-          </div>
-          <div class="metric">
-            <strong id="overallProgress">0%</strong>
-            <div style="color: var(--muted)">Overall Progress</div>
-          </div>
-        </div>
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-          "
-        >
-          <div class="cat-tabs" id="categoryTabs" role="tablist"></div>
-          <div style="display: flex; gap: 8px; align-items: center">
-            <button id="sortBtn" class="btn">Sort A→Z</button>
-            <button id="resetBtn" class="btn">Reset Progress</button>
-          </div>
-        </div>
-        <div class="layout">
-          <section class="panel">
-            <div
-              id="materialsList"
-              class="materials-list"
-              aria-live="polite"
-            ></div>
-          </section>
-          <aside>
-            <div class="panel">
-              <h4>Favorites</h4>
-              <div id="favoritesList" class="fav-list"></div>
-              <div style="display: flex; gap: 8px; margin-top: 8px">
-                <button id="clearFavs" class="btn">Clear Favorites</button>
-                <button id="openFav" class="btn">Open Favorites</button>
-              </div>
-            </div>
-            <div class="panel" style="margin-top: 12px">
-              <h4>Quick Insights</h4>
-              <div style="display: flex; flex-direction: column; gap: 8px">
-                <div style="display: flex; justify-content: space-between">
-                  <span style="color: var(--muted)">Categories</span
-                  ><strong id="catCount">0</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between">
-                  <span style="color: var(--muted)">Followed</span
-                  ><strong id="followedCount">0</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between">
-                  <span style="color: var(--muted)">Avg completion</span
-                  ><strong id="avgComp">0%</strong>
-                </div>
-                <div style="margin-top: 8px; display: flex; gap: 8px">
-                  <button id="markAllDone" class="btn">
-                    Mark followed Done
-                  </button>
-                  <button disabled class="btn">Export (disabled)</button>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </div>
-        <p style="color: var(--muted); margin-top: 12px">
-          Tip: tekan <kbd>/</kbd> untuk fokus ke pencarian. Toggle "Persist
-          Progress" jika ingin menyimpan antar-refresh.
-        </p>
-      </main>
+      <a href="dashboard.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#" class="menu-item active">
+        <i class="fas fa-book"></i>
+        <span>Materials</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i class="fas fa-clipboard-check"></i>
+        <span>Quiz</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+
+      <div class="mascot">
+        <img src="mascot.png" alt="Mascot" />
+      </div>
     </div>
 
-    <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true">
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <h3 id="modalTitle">Material</h3>
-          <div><button id="modalClose" class="btn">Close</button></div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header-top">
+        <div class="header">
+          <h1>Materials</h1>
+          <p>Explore all lessons and topics to boost your skills!</p>
         </div>
-        <div
-          style="
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-            align-items: flex-start;
-          "
-        >
-          <div
-            style="
-              width: 260px;
-              height: 160px;
-              border-radius: 10px;
-              overflow: hidden;
-              background: #eef6ff;
-            "
-          >
-            <img
-              id="modalImg"
-              alt=""
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
+
+        <div class="bubbles">
+          <div class="bubble"></div>
+          <div class="bubble"></div>
+          <div class="bubble"></div>
+          <div class="bubble"></div>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          class="search-bar"
+          placeholder="What do you want to learn today?"
+        />
+        <i class="fas fa-microphone mic-icon"></i>
+      </div>
+
+      <!-- Sort Button -->
+      <button class="sort-button" id="sortButton">
+        <span>Sort by</span>
+        <i class="fas fa-filter"></i>
+      </button>
+
+      <!-- Sort Modal -->
+      <div class="sort-modal" id="sortModal">
+        <div class="sort-modal-content">
+          <button class="modal-close" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+
+          <div class="modal-header">
+            <h2 class="modal-title">Sort by</h2>
           </div>
-          <div style="flex: 1">
-            <div id="modalName" style="font-weight: 800"></div>
-            <div
-              id="modalCat"
-              style="color: var(--muted); margin-top: 6px"
-            ></div>
-            <p id="modalDesc" style="color: var(--muted); margin-top: 8px"></p>
-            <div style="display: flex; gap: 8px; margin-top: 12px">
-              <button id="modalFavBtn" class="btn">Favorite</button>
-              <button id="modalFollowBtn" class="btn">Follow</button>
+
+          <div class="filter-section">
+            <label class="filter-label">Sort by</label>
+            <div class="filter-options">
+              <div class="filter-option active" data-sort="all">All</div>
+              <div class="filter-option" data-sort="oldest">Oldest</div>
+              <div class="filter-option" data-sort="latest">Latest</div>
             </div>
-            <div style="margin-top: 12px" class="progress-row">
-              <div class="progress-bar" style="flex: 1">
-                <div id="modalFill" class="fill" style="width: 0%"></div>
+          </div>
+
+          <div class="filter-section">
+            <label class="filter-label">Level</label>
+            <div class="filter-options">
+              <div class="filter-option" data-level="beginner">Beginner</div>
+              <div class="filter-option" data-level="intermediate">
+                Intermediate
               </div>
-              <div class="progress-num" id="modalPct">0%</div>
+              <div class="filter-option" data-level="upper-intermediate">
+                Upper Intermediate
+              </div>
+              <div class="filter-option" data-level="advanced">Advanced</div>
             </div>
-            <div style="margin-top: 12px; display: flex; gap: 8px">
-              <button id="incProgress" class="btn">+10%</button>
-              <button id="setDone" class="btn">Set 100%</button>
-              <button id="downloadCert" class="btn" style="display: none">
-                Download Certificate
-              </button>
+          </div>
+
+          <div class="filter-section">
+            <label class="filter-label">Category</label>
+            <div class="filter-options">
+              <div class="filter-option" data-category="grammar">Grammar</div>
+              <div class="filter-option" data-category="vocabulary">
+                Vocabulary
+              </div>
+              <div class="filter-option" data-category="speaking">Speaking</div>
+              <div class="filter-option" data-category="listening">
+                Listening
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Materials Grid -->
+      <div class="materials-grid">
+        <div class="material-card">
+          <div class="material-icon">
+            <i class="fas fa-pen"></i>
+          </div>
+          <div class="material-title">Grammar</div>
+          <div class="material-description">
+            Learn grammar rules<br />and sentences<br />structures
+          </div>
+        </div>
+
+        <div class="material-card">
+          <div class="material-icon">
+            <i class="fas fa-microphone-alt"></i>
+          </div>
+          <div class="material-title">Speaking</div>
+          <div class="material-description">
+            Practice speaking and<br />improve pronounciation
+          </div>
+        </div>
+
+        <div class="material-card">
+          <div class="material-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="material-title">Time</div>
+          <div class="material-description">
+            Understand how to tell time<br />and talk about schedule
+          </div>
+        </div>
+
+        <div class="material-card">
+          <div class="material-icon">
+            <i class="fas fa-hand-peace"></i>
+          </div>
+          <div class="material-title">Greeting</div>
+          <div class="material-description">
+            Learn how to say hello<br />and introduce yourself
+          </div>
+        </div>
+
+        <div class="material-card">
+          <div class="material-icon">
+            <i class="fas fa-headphones"></i>
+          </div>
+          <div class="material-title">Listening</div>
+          <div class="material-description">
+            Learn how to understand<br />pronounciation clearly
+          </div>
+        </div>
+
+        <div class="material-card">
+          <div class="material-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <div class="material-title">Vocabulary</div>
+          <div class="material-description">
+            Expand your English<br />vocabulary
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="confettiWrap" class="confetti-wrap" aria-hidden="true"></div>
-    <script src="materials.js"></script>
+
+    <script>
+      // Animasi saat halaman dimuat
+      window.addEventListener("load", function () {
+        // Fade in body
+        document.body.style.opacity = "0";
+        document.body.style.transition = "opacity 0.5s ease";
+
+        setTimeout(() => {
+          document.body.style.opacity = "1";
+        }, 50);
+
+        // Animasi sidebar menu items
+        const menuItems = document.querySelectorAll(".menu-item");
+        menuItems.forEach((item, index) => {
+          item.style.transform = "translateX(-20px)";
+          item.style.opacity = "0";
+          item.style.transition = "all 0.5s ease";
+
+          setTimeout(() => {
+            item.style.transform = "translateX(0)";
+            item.style.opacity = "1";
+          }, 100 + index * 80);
+        });
+
+        // Animasi header
+        const header = document.querySelector(".header");
+        header.style.transform = "translateY(20px)";
+        header.style.opacity = "0";
+        header.style.transition = "all 0.8s ease";
+
+        setTimeout(() => {
+          header.style.transform = "translateY(0)";
+          header.style.opacity = "1";
+        }, 300);
+
+        // Animasi bubbles
+        const bubbles = document.querySelectorAll(".bubble");
+        bubbles.forEach((bubble, index) => {
+          bubble.style.transform = "scale(0)";
+          bubble.style.transition =
+            "all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+
+          setTimeout(() => {
+            bubble.style.transform = "scale(1)";
+          }, 500 + index * 100);
+        });
+
+        // Animasi search bar
+        const searchContainer = document.querySelector(".search-container");
+        searchContainer.style.transform = "translateY(20px)";
+        searchContainer.style.opacity = "0";
+        searchContainer.style.transition = "all 0.6s ease";
+
+        setTimeout(() => {
+          searchContainer.style.transform = "translateY(0)";
+          searchContainer.style.opacity = "1";
+        }, 600);
+
+        // Animasi sort button
+        const sortButton = document.querySelector(".sort-button");
+        sortButton.style.transform = "translateX(20px)";
+        sortButton.style.opacity = "0";
+        sortButton.style.transition = "all 0.6s ease";
+
+        setTimeout(() => {
+          sortButton.style.transform = "translateX(0)";
+          sortButton.style.opacity = "1";
+        }, 700);
+
+        // Animasi material cards
+        const materialCards = document.querySelectorAll(".material-card");
+        materialCards.forEach((card, index) => {
+          card.style.transform = "translateY(30px)";
+          card.style.opacity = "0";
+          card.style.transition = "all 0.6s ease";
+
+          setTimeout(() => {
+            card.style.transform = "translateY(0)";
+            card.style.opacity = "1";
+          }, 800 + index * 100);
+        });
+      });
+
+      // Hover effect pada material cards
+      document.querySelectorAll(".material-card").forEach((card) => {
+        card.addEventListener("mouseenter", function () {
+          this.style.background =
+            "linear-gradient(135deg, #5aa3c7 0%, #4a92b5 100%)";
+        });
+
+        card.addEventListener("mouseleave", function () {
+          this.style.background =
+            "linear-gradient(135deg, #6bb6d8 0%, #5aa3c7 100%)";
+        });
+      });
+
+      // Voice search functionality (placeholder)
+      document
+        .querySelector(".mic-icon")
+        .addEventListener("click", function () {
+          alert("Voice search feature - will be implemented");
+        });
+
+      // Search functionality
+      document
+        .querySelector(".search-bar")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          const cards = document.querySelectorAll(".material-card");
+
+          cards.forEach((card) => {
+            const title = card
+              .querySelector(".material-title")
+              .textContent.toLowerCase();
+            const description = card
+              .querySelector(".material-description")
+              .textContent.toLowerCase();
+
+            if (
+              title.includes(searchTerm) ||
+              description.includes(searchTerm)
+            ) {
+              card.style.display = "block";
+            } else {
+              card.style.display = searchTerm === "" ? "block" : "none";
+            }
+          });
+        });
+
+      // Sort button functionality
+      const sortButton = document.getElementById("sortButton");
+      const sortModal = document.getElementById("sortModal");
+      const closeModal = document.getElementById("closeModal");
+
+      // Open modal
+      sortButton.addEventListener("click", function () {
+        sortModal.classList.add("active");
+      });
+
+      // Close modal
+      closeModal.addEventListener("click", function () {
+        sortModal.classList.remove("active");
+      });
+
+      // Close modal when clicking outside
+      sortModal.addEventListener("click", function (e) {
+        if (e.target === sortModal) {
+          sortModal.classList.remove("active");
+        }
+      });
+
+      // Filter options functionality
+      const filterOptions = document.querySelectorAll(".filter-option");
+
+      filterOptions.forEach((option) => {
+        option.addEventListener("click", function () {
+          // Get the parent filter section
+          const filterSection = this.closest(".filter-section");
+          const siblings = filterSection.querySelectorAll(".filter-option");
+
+          // Remove active class from siblings in the same section
+          siblings.forEach((sibling) => {
+            sibling.classList.remove("active");
+          });
+
+          // Add active class to clicked option
+          this.classList.add("active");
+
+          // Add visual feedback
+          this.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            this.style.transform = "";
+          }, 150);
+
+          // Get filter values
+          const sortValue =
+            filterSection.querySelector("[data-sort].active")?.dataset.sort;
+          const levelValue = filterSection.querySelector("[data-level].active")
+            ?.dataset.level;
+          const categoryValue = filterSection.querySelector(
+            "[data-category].active"
+          )?.dataset.category;
+
+          console.log("Filters applied:", {
+            sortValue,
+            levelValue,
+            categoryValue,
+          });
+          // Here you can add filtering logic for the material cards
+        });
+      });
+
+      // Add keyboard support (ESC to close)
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && sortModal.classList.contains("active")) {
+          sortModal.classList.remove("active");
+        }
+      });
+    </script>
   </body>
 </html>
