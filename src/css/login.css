@@ -22,7 +22,6 @@ body {
   margin-left: 30px;
   width: fit-content;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  
 }
 
 .logo-container img {
@@ -32,9 +31,8 @@ body {
   filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.1));
 }
 
-
 .logo-text {
-  font-size: 2px;
+  font-size: 36px;
   font-weight: 300;
   color: #1f2937;
   letter-spacing: -1px;
@@ -45,7 +43,6 @@ body {
   text-align: center;
   width: 100%;
   max-width: 450px;
-  transform: scale(1.25);
 }
 
 h1 {
@@ -89,7 +86,7 @@ input[type="password"]:focus {
 }
 
 input::placeholder {
-  color: black
+  color: #6b7280;
 }
 
 .signin-btn {
