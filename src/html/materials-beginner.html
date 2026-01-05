@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beginner Materials - Engweb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #2b7db3 0%, #1a5a85 100%);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 12px 25px;
+            margin: 0 20px 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item {
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            width: calc(100% - 250px);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            color: #6b7280;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateX(-5px);
+        }
+
+        /* Lessons List Screen */
+        .lessons-list-screen {
+            display: block;
+        }
+
+        .lessons-list-screen.hidden {
+            display: none;
+        }
+
+        .header-section {
+            margin-bottom: 40px;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .header-section h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .lessons-grid {
+            display: grid;
+            gap: 20px;
+            max-width: 900px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .lesson-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+            transform: translateX(5px);
+        }
+
+        .lesson-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .lesson-card.locked:hover {
+            transform: none;
+            border-color: #e5e7eb;
+        }
+
+        .lesson-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .lesson-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .lesson-card.locked .lesson-number {
+            background: #e5e7eb;
+            color: #9ca3af;
+        }
+
+        .lesson-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .lesson-info p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .lesson-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lesson-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+
+        .lesson-card.completed .progress-circle {
+            background: #dcfce7;
+        }
+
+        .lesson-card.completed .progress-text {
+            color: #16a34a;
+        }
+
+        /* Lesson Detail Screen */
+        .lesson-detail-screen {
+            display: none;
+        }
+
+        .lesson-detail-screen.active {
+            display: block;
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 20px;
+            padding: 35px;
+            color: white;
+            margin-bottom: 35px;
+        }
+
+        .lesson-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .lesson-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .lesson-progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .lesson-progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #e5e7eb;
+            position: relative;
+        }
+
+        .section-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+
+        .section-card.completed {
+            border-color: #10b981;
+        }
+
+        .section-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .section-card.locked:hover {
+            transform: none;
+            border-color: #e5e7eb;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .section-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .section-card.completed .section-number {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .section-card.locked .section-number {
+            background: #e5e7eb;
+            color: #9ca3af;
+        }
+
+        .section-status {
+            font-size: 24px;
+        }
+
+        .section-status.completed {
+            color: #10b981;
+        }
+
+        .section-status.locked {
+            color: #9ca3af;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .section-duration {
+            font-size: 13px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Screen */
+        .content-screen {
+            display: none;
+        }
+
+        .content-screen.active {
+            display: block;
+        }
+
+        .content-header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .content-header h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .content-header p {
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .content-body {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .vocab-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .vocab-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .vocab-icon {
+            font-size: 36px;
+        }
+
+        .vocab-content h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .vocab-pronunciation {
+            font-size: 14px;
+            color: #6b7280;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .vocab-meaning {
+            font-size: 15px;
+            color: #4b5563;
+            margin-bottom: 5px;
+        }
+
+        .vocab-example {
+            font-size: 14px;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .grammar-section {
+            margin-bottom: 30px;
+        }
+
+        .grammar-section h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        .grammar-content {
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .example-box {
+            background: #eff6ff;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            margin: 15px 0;
+        }
+
+        .example-box p {
+            font-size: 15px;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .example-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .audio-player {
+            background: #f9fafb;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .audio-icon {
+            font-size: 48px;
+            color: #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .play-button {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .reading-text {
+            font-size: 17px;
+            color: #374151;
+            line-height: 2;
+            margin-bottom: 25px;
+        }
+
+        .reading-text p {
+            margin-bottom: 20px;
+        }
+
+        .comprehension-questions {
+            margin-top: 30px;
+        }
+
+        .comprehension-questions h5 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        .question-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .question-item p {
+            font-size: 16px;
+            color: #1f2937;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .review-summary {
+            display: grid;
+            gap: 20px;
+        }
+
+        .review-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .review-item h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .review-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .review-item li {
+            font-size: 15px;
+            color: #4b5563;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .review-item li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .test-container {
+            max-width: 800px;
+        }
+
+        .test-question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .test-question h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .test-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .test-option {
+            padding: 15px 20px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .test-option:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .test-option.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                width: calc(100% - 80px);
+                padding: 20px;
+            }
+
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-sidebar">
+            <img src="/assets/image/logoengweb.png" alt="Engweb Logo" style="height: 35px;" />
+        </div>
+
+        <a href="dashboard.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="materials.html" class="menu-item active">
+            <i class="fas fa-book"></i>
+            <span>Materials</span>
+        </a>
+
+        <a href="quiz.html" class="menu-item">
+            <i class="fas fa-clipboard-check"></i>
+            <span>Quiz</span>
+        </a>
+
+        <a href="Profile.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Lessons List Screen -->
+        <div class="lessons-list-screen" id="lessonsListScreen">
+            <button class="back-button" onclick="window.location.href='materials.html'">
+                <i class="fas fa-arrow-left"></i>
+                Back to Materials
+            </button>
+
+            <div class="header-section">
+                <div class="level-badge">
+                    <i class="fas fa-seedling"></i>
+                    Beginner Level (A1-A2)
+                </div>
+                <h1>English Lessons</h1>
+                <p>Complete lessons step by step to master English basics</p>
+            </div>
+
+            <div class="lessons-grid" id="lessonsGrid">
+                <!-- Lessons will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Lesson Detail Screen -->
+        <div class="lesson-detail-screen" id="lessonDetailScreen">
+            <button class="back-button" onclick="backToLessons()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Lessons
+            </button>
+
+            <div class="lesson-header">
+                <h2 id="lessonTitle">Lesson 1: Greetings & Introductions</h2>
+                <p id="lessonSubtitle">Learn how to greet people and introduce yourself</p>
+                <div class="lesson-progress-bar">
+                    <div class="lesson-progress-fill" id="lessonProgressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="sections-grid" id="sectionsGrid">
+                <!-- Sections will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Content Screen -->
+        <div class="content-screen" id="contentScreen">
+            <button class="back-button" onclick="backToSections()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Lesson
+            </button>
+
+            <div class="content-header">
+                <h3 id="contentTitle">Vocabulary</h3>
+                <p id="contentSubtitle">Learn essential words and phrases</p>
+            </div>
+
+            <div class="content-body" id="contentBody">
+                <!-- Content will be inserted here -->
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="backToSections()">Back</button>
+                <button class="btn btn-primary" onclick="completeSection()">Complete & Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lesson data structure
+        const lessonsData = [
+            {
+                id: 1,
+                title: "Greetings & Introductions",
+                description: "Learn how to greet people and introduce yourself",
+                topics: "Hello, Hi, My name is...",
+                duration: "45 min",
+                totalSections: 6
+            },
+            {
+                id: 2,
+                title: "Numbers & Time",
+                description: "Master numbers, dates, and telling time",
+                topics: "1-100, Days, Months, Time",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 3,
+                title: "Family & Relationships",
+                description: "Talk about your family and relationships",
+                topics: "Father, Mother, Brother, Sister",
+                duration: "45 min",
+                totalSections: 6
+            },
+            {
+                id: 4,
+                title: "Daily Activities",
+                description: "Describe your daily routine and activities",
+                topics: "Wake up, Eat, Work, Sleep",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 5,
+                title: "Food & Drinks",
+                description: "Order food and talk about meals",
+                topics: "Breakfast, Lunch, Dinner, Drinks",
+                duration: "45 min",
+                totalSections: 6
+            },
+            {
+                id: 6,
+                title: "Places & Directions",
+                description: "Ask for and give directions",
+                topics: "School, Home, Hospital, Street",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 7,
+                title: "Shopping & Money",
+                description: "Shop and handle money transactions",
+                topics: "Buy, Sell, Price, Money",
+                duration: "45 min",
+                totalSections: 6
+            },
+            {
+                id: 8,
+                title: "Weather & Seasons",
+                description: "Talk about weather and seasons",
+                topics: "Sunny, Rainy, Hot, Cold",
+                duration: "45 min",
+                totalSections: 6
+            },
+            {
+                id: 9,
+                title: "Hobbies & Interests",
+                description: "Discuss your hobbies and interests",
+                topics: "Reading, Sports, Music, Movies",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 10,
+                title: "Travel & Transportation",
+                description: "Travel and use different transportation",
+                topics: "Bus, Train, Plane, Taxi",
+                duration: "50 min",
+                totalSections: 6
+            }
+        ];
+
+        // Section templates
+        const sectionTypes = [
+            { id: 1, name: "Vocabulary", icon: "fas fa-spell-check", duration: "10 min" },
+            { id: 2, name: "Grammar", icon: "fas fa-language", duration: "12 min" },
+            { id: 3, name: "Listening", icon: "fas fa-headphones", duration: "8 min" },
+            { id: 4, name: "Reading", icon: "fas fa-book-reader", duration: "10 min" },
+            { id: 5, name: "Lesson Review", icon: "fas fa-clipboard-list", duration: "5 min" },
+            { id: 6, name: "Lesson Test", icon: "fas fa-clipboard-check", duration: "10 min" }
+        ];
+
+        // User progress (simulated)
+        let userProgress = {
+            completedLessons: [],
+            currentLesson: 1,
+            lessonProgress: {
+                1: { completedSections: [] }
+            }
+        };
+
+        let currentLesson = null;
+        let currentSection = null;
+
+        // Initialize
+        renderLessons();
+
+        function renderLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            grid.innerHTML = '';
+
+            lessonsData.forEach(lesson => {
+                const isCompleted = userProgress.completedLessons.includes(lesson.id);
+                const isLocked = lesson.id > userProgress.currentLesson;
+                const progress = calculateLessonProgress(lesson.id);
+
+                const card = document.createElement('div');
+                card.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                card.onclick = !isLocked ? () => openLesson(lesson.id) : null;
+
+                card.innerHTML = `
+                    <div class="lesson-left">
+                        <div class="lesson-number">${isLocked ? '<i class="fas fa-lock"></i>' : lesson.id}</div>
+                        <div class="lesson-info">
+                            <h3>${lesson.title}</h3>
+                            <p>${lesson.description}</p>
+                            <div class="lesson-meta">
+                                <span><i class="fas fa-book"></i> ${lesson.topics}</span>
+                                <span><i class="fas fa-clock"></i> ${lesson.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress">
+                        <div class="progress-circle">
+                            <span class="progress-text">${progress}%</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #9ca3af; font-size: 20px;"></i>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function calculateLessonProgress(lessonId) {
+            const sections = userProgress.lessonProgress[lessonId]?.completedSections || [];
+            return Math.round((sections.length / 6) * 100);
+        }
+
+        function openLesson(lessonId) {
+            currentLesson = lessonsData.find(l => l.id === lessonId);
+            
+            document.getElementById('lessonTitle').textContent = `Lesson ${currentLesson.id}: ${currentLesson.title}`;
+            document.getElementById('lessonSubtitle').textContent = currentLesson.description;
+            
+            const progress = calculateLessonProgress(lessonId);
+            document.getElementById('lessonProgressFill').style.width = progress + '%';
+
+            renderSections();
+            
+            document.getElementById('lessonsListScreen').classList.add('hidden');
+            document.getElementById('lessonDetailScreen').classList.add('active');
+        }
+
+        function renderSections() {
+            const grid = document.getElementById('sectionsGrid');
+            grid.innerHTML = '';
+
+            const completedSections = userProgress.lessonProgress[currentLesson.id]?.completedSections || [];
+
+            sectionTypes.forEach((section, index) => {
+                const isCompleted = completedSections.includes(section.id);
+                const isLocked = index > 0 && !completedSections.includes(index);
+
+                const card = document.createElement('div');
+                card.className = `section-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                card.onclick = !isLocked ? () => openSection(section.id) : null;
+
+                card.innerHTML = `
+                    <div class="section-header">
+                        <div class="section-number">${isLocked ? '<i class="fas fa-lock"></i>' : section.id}</div>
+                        <div class="section-status ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}">
+                            ${isCompleted ? '<i class="fas fa-check-circle"></i>' : (isLocked ? '<i class="fas fa-lock"></i>' : '<i class="fas fa-play-circle"></i>')}
+                        </div>
+                    </div>
+                    <div class="section-title">${section.name}</div>
+                    <div class="section-description">Master ${section.name.toLowerCase()} skills</div>
+                    <div class="section-duration">
+                        <i class="fas fa-clock"></i>
+                        ${section.duration}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openSection(sectionId) {
+            currentSection = sectionTypes.find(s => s.id === sectionId);
+            
+            document.getElementById('contentTitle').textContent = currentSection.name;
+            document.getElementById('contentSubtitle').textContent = `Learn ${currentSection.name.toLowerCase()} for ${currentLesson.title}`;
+            
+            renderSectionContent(sectionId);
+            
+            document.getElementById('lessonDetailScreen').classList.remove('active');
+            document.getElementById('contentScreen').classList.add('active');
+        }
+
+        function renderSectionContent(sectionId) {
+            const body = document.getElementById('contentBody');
+            
+            if (currentLesson.id === 1) {
+                // Lesson 1: Greetings & Introductions content
+                if (sectionId === 1) {
+                    body.innerHTML = `
+                        <div class="vocab-list">
+                            <div class="vocab-item">
+                                <div class="vocab-icon">👋</div>
+                                <div class="vocab-content">
+                                    <h4>Hello</h4>
+                                    <div class="vocab-pronunciation">/həˈloʊ/</div>
+                                    <div class="vocab-meaning">Halo - Sapaan umum yang bisa digunakan kapan saja</div>
+                                    <div class="vocab-example">Example: "Hello! How are you?"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🙋</div>
+                                <div class="vocab-content">
+                                    <h4>Hi</h4>
+                                    <div class="vocab-pronunciation">/haɪ/</div>
+                                    <div class="vocab-meaning">Hai - Sapaan informal untuk teman atau orang yang sudah dikenal</div>
+                                    <div class="vocab-example">Example: "Hi! Nice to see you."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🌅</div>
+                                <div class="vocab-content">
+                                    <h4>Good morning</h4>
+                                    <div class="vocab-pronunciation">/ɡʊd ˈmɔːrnɪŋ/</div>
+                                    <div class="vocab-meaning">Selamat pagi - Digunakan dari pagi hingga siang (sebelum jam 12)</div>
+                                    <div class="vocab-example">Example: "Good morning, teacher!"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">☀️</div>
+                                <div class="vocab-content">
+                                    <h4>Good afternoon</h4>
+                                    <div class="vocab-pronunciation">/ɡʊd ˌæftərˈnuːn/</div>
+                                    <div class="vocab-meaning">Selamat siang - Digunakan dari jam 12 hingga sore (sebelum jam 6)</div>
+                                    <div class="vocab-example">Example: "Good afternoon, everyone!"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🌙</div>
+                                <div class="vocab-content">
+                                    <h4>Good evening</h4>
+                                    <div class="vocab-pronunciation">/ɡʊd ˈiːvnɪŋ/</div>
+                                    <div class="vocab-meaning">Selamat malam - Digunakan dari jam 6 malam hingga sebelum tidur</div>
+                                    <div class="vocab-example">Example: "Good evening, sir!"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">😊</div>
+                                <div class="vocab-content">
+                                    <h4>My name is...</h4>
+                                    <div class="vocab-pronunciation">/maɪ neɪm ɪz/</div>
+                                    <div class="vocab-meaning">Nama saya adalah... - Cara memperkenalkan diri</div>
+                                    <div class="vocab-example">Example: "My name is John. Nice to meet you."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🤝</div>
+                                <div class="vocab-content">
+                                    <h4>Nice to meet you</h4>
+                                    <div class="vocab-pronunciation">/naɪs tuː miːt juː/</div>
+                                    <div class="vocab-meaning">Senang bertemu dengan Anda - Digunakan saat bertemu orang baru</div>
+                                    <div class="vocab-example">Example: "Nice to meet you, Sarah!"</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">👋</div>
+                                <div class="vocab-content">
+                                    <h4>Goodbye</h4>
+                                    <div class="vocab-pronunciation">/ɡʊdˈbaɪ/</div>
+                                    <div class="vocab-meaning">Selamat tinggal - Ucapan saat berpisah</div>
+                                    <div class="vocab-example">Example: "Goodbye! See you tomorrow."</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 2) {
+                    body.innerHTML = `
+                        <div class="grammar-section">
+                            <h4>Present Simple Tense: To Be (am, is, are)</h4>
+                            <div class="grammar-content">
+                                <p>Dalam bahasa Inggris, kita menggunakan "to be" untuk menyatakan identitas, keadaan, atau kondisi. Ada tiga bentuk "to be" dalam present tense:</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p><strong>I am</strong> (saya adalah) - digunakan dengan subjek "I"</p>
+                                <p>• I am a student. (Saya adalah seorang siswa)</p>
+                                <p>• I am happy. (Saya senang)</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p><strong>You/We/They are</strong> - digunakan dengan subjek jamak</p>
+                                <p>• You are my friend. (Kamu adalah temanku)</p>
+                                <p>• We are from Indonesia. (Kami dari Indonesia)</p>
+                                <p>• They are students. (Mereka adalah siswa)</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p><strong>He/She/It is</strong> - digunakan dengan subjek tunggal</p>
+                                <p>• He is a teacher. (Dia laki-laki adalah guru)</p>
+                                <p>• She is from Jakarta. (Dia perempuan dari Jakarta)</p>
+                                <p>• It is a book. (Ini adalah sebuah buku)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Personal Pronouns (Kata Ganti Orang)</h4>
+                            <div class="grammar-content">
+                                <p>Personal pronouns digunakan untuk menggantikan nama orang atau benda:</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p>• <strong>I</strong> = Saya</p>
+                                <p>• <strong>You</strong> = Kamu/Anda (tunggal atau jamak)</p>
+                                <p>• <strong>He</strong> = Dia (laki-laki)</p>
+                                <p>• <strong>She</strong> = Dia (perempuan)</p>
+                                <p>• <strong>It</strong> = Dia/Ini (benda atau hewan)</p>
+                                <p>• <strong>We</strong> = Kami/Kita</p>
+                                <p>• <strong>They</strong> = Mereka</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Question Formation (Membuat Pertanyaan)</h4>
+                            <div class="grammar-content">
+                                <p>Untuk membuat pertanyaan dengan "to be", kita membalik posisi subjek dan verb:</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p>Statement: You <strong>are</strong> a student.</p>
+                                <p>Question: <strong>Are</strong> you a student?</p>
+                                <p></p>
+                                <p>Statement: He <strong>is</strong> from Japan.</p>
+                                <p>Question: <strong>Is</strong> he from Japan?</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 3) {
+                    body.innerHTML = `
+                        <div class="audio-player">
+                            <div class="audio-icon">
+                                <i class="fas fa-headphones-alt"></i>
+                            </div>
+                            <h4 style="margin-bottom: 10px;">Listening Practice: Greetings Conversation</h4>
+                            <p style="color: #6b7280; margin-bottom: 20px;">Listen to the following conversation and answer the questions</p>
+                            <button class="play-button" onclick="alert('Audio player will play the conversation')">
+                                <i class="fas fa-play"></i> Play Audio
+                            </button>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Conversation Script</h4>
+                            <div class="example-box">
+                                <p><strong>Person A:</strong> Good morning! My name is Sarah. What's your name?</p>
+                                <p><strong>Person B:</strong> Good morning, Sarah! I'm David. Nice to meet you.</p>
+                                <p><strong>Person A:</strong> Nice to meet you too, David! Where are you from?</p>
+                                <p><strong>Person B:</strong> I'm from London. How about you?</p>
+                                <p><strong>Person A:</strong> I'm from Jakarta. Are you a student here?</p>
+                                <p><strong>Person B:</strong> Yes, I am. I'm studying English. And you?</p>
+                                <p><strong>Person A:</strong> I'm a student too! We're in the same class.</p>
+                                <p><strong>Person B:</strong> Great! See you in class!</p>
+                                <p><strong>Person A:</strong> Goodbye! See you later!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="comprehension-questions">
+                            <h5>Comprehension Questions:</h5>
+                            <div class="question-item">
+                                <p>1. What is Person A's name?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: Sarah</div>
+                            </div>
+                            <div class="question-item">
+                                <p>2. Where is David from?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: London</div>
+                            </div>
+                            <div class="question-item">
+                                <p>3. What are they both doing?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: They are students studying English</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 4) {
+                    body.innerHTML = `
+                        <div class="reading-text">
+                            <h4 style="font-size: 24px; margin-bottom: 20px; color: #1f2937;">Meeting New Friends</h4>
+                            
+                            <p>Hello! My name is Lisa. I am from Singapore. I am 20 years old. I am a student at a language school. I am learning English because I want to travel around the world.</p>
+                            
+                            <p>Today is my first day at school. I meet many new friends. There is Tom from America. He is very friendly. There is also Maria from Brazil. She is studying English too. We are all beginners.</p>
+                            
+                            <p>Our teacher is Mr. Johnson. He is from England. He is a good teacher. He helps us learn English every day. We are happy to be in his class.</p>
+                            
+                            <p>After class, we talk together. Tom says, "Nice to meet you, Lisa!" I say, "Nice to meet you too!" Maria says, "Let's study together!" We are excited to learn English.</p>
+                            
+                            <p>I am happy to make new friends. Learning English is fun when we study together!</p>
+                        </div>
+                        
+                        <div class="comprehension-questions">
+                            <h5>Reading Comprehension:</h5>
+                            <div class="question-item">
+                                <p>1. Where is Lisa from?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) America  b) Singapore  c) Brazil  d) England</div>
+                            </div>
+                            <div class="question-item">
+                                <p>2. How old is Lisa?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) 18 years old  b) 19 years old  c) 20 years old  d) 21 years old</div>
+                            </div>
+                            <div class="question-item">
+                                <p>3. Who is the teacher?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) Tom  b) Maria  c) Lisa  d) Mr. Johnson</div>
+                            </div>
+                            <div class="question-item">
+                                <p>4. Why is Lisa learning English?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) For work  b) To travel  c) For school  d) For business</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 5) {
+                    body.innerHTML = `
+                        <h4 style="font-size: 26px; margin-bottom: 25px; color: #1f2937;">Lesson Review</h4>
+                        
+                        <div class="review-summary">
+                            <div class="review-item">
+                                <h5>📚 Vocabulary Learned</h5>
+                                <ul>
+                                    <li>Hello, Hi, Good morning, Good afternoon, Good evening</li>
+                                    <li>My name is..., What's your name?</li>
+                                    <li>Nice to meet you</li>
+                                    <li>Goodbye, See you later</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>📖 Grammar Covered</h5>
+                                <ul>
+                                    <li>Present Simple: To Be (am, is, are)</li>
+                                    <li>Personal Pronouns (I, you, he, she, it, we, they)</li>
+                                    <li>Question formation with "to be"</li>
+                                    <li>Basic sentence structure</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>🎧 Listening Skills</h5>
+                                <ul>
+                                    <li>Understanding simple greetings</li>
+                                    <li>Identifying names and personal information</li>
+                                    <li>Following basic conversations</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>📝 Reading Comprehension</h5>
+                                <ul>
+                                    <li>Reading simple texts about introductions</li>
+                                    <li>Understanding personal information</li>
+                                    <li>Answering comprehension questions</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>💡 Key Takeaways</h5>
+                                <ul>
+                                    <li>You can now greet people in English</li>
+                                    <li>You can introduce yourself confidently</li>
+                                    <li>You understand basic "to be" verb usage</li>
+                                    <li>You're ready to start simple conversations!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 6) {
+                    body.innerHTML = `
+                        <h4 style="font-size: 26px; margin-bottom: 25px; color: #1f2937;">Lesson Test</h4>
+                        <p style="color: #6b7280; margin-bottom: 30px;">Complete this test to unlock the next lesson. You need 80% to pass.</p>
+                        
+                        <div class="test-container">
+                            <div class="test-question">
+                                <h5>1. Choose the correct greeting for 8:00 AM</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. Good evening</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. Good afternoon</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. Good morning</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. Good night</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>2. Complete: "My name ___ Sarah."</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. am</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. is</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. are</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. be</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>3. Choose the correct pronoun: "___ is my teacher." (male)</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. She</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. He</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. It</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. They</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>4. What do you say when meeting someone for the first time?</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. See you later</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. Goodbye</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. Nice to meet you</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. Good night</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>5. Complete the question: "___ you a student?"</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. Is</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. Am</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. Are</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. Be</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        function selectOption(element) {
+            const parent = element.parentElement;
+            const options = parent.querySelectorAll('.test-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function completeSection() {
+            if (!userProgress.lessonProgress[currentLesson.id]) {
+                userProgress.lessonProgress[currentLesson.id] = { completedSections: [] };
+            }
+            
+            const completedSections = userProgress.lessonProgress[currentLesson.id].completedSections;
+            
+            if (!completedSections.includes(currentSection.id)) {
+                completedSections.push(currentSection.id);
+            }
+            
+            // If all sections completed, unlock next lesson
+            if (completedSections.length === 6) {
+                if (!userProgress.completedLessons.includes(currentLesson.id)) {
+                    userProgress.completedLessons.push(currentLesson.id);
+                    userProgress.currentLesson = currentLesson.id + 1;
+                    alert('🎉 Congratulations! You completed Lesson ' + currentLesson.id + '! Next lesson is now unlocked.');
+                }
+            }
+            
+            backToSections();
+        }
+
+        function backToSections() {
+            document.getElementById('contentScreen').classList.remove('active');
+            document.getElementById('lessonDetailScreen').classList.add('active');
+            renderSections();
+            
+            const progress = calculateLessonProgress(currentLesson.id);
+            document.getElementById('lessonProgressFill').style.width = progress + '%';
+        }
+
+        function backToLessons() {
+            document.getElementById('lessonDetailScreen').classList.remove('active');
+            document.getElementById('lessonsListScreen').classList.remove('hidden');
+            renderLessons();
+        }
+    </script>
+</body>
+</html>

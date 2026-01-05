@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pre-Test Assessment - Engweb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #2b7db3 0%, #1a5a85 100%);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 12px 25px;
+            margin: 0 20px 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item {
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            width: calc(100% - 250px);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            color: #6b7280;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateX(-5px);
+        }
+
+        /* Intro Screen */
+        .intro-screen {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-screen.hidden {
+            display: none;
+        }
+
+        .intro-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-icon {
+            font-size: 80px;
+            color: #ea580c;
+            margin-bottom: 20px;
+        }
+
+        .intro-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .intro-header p {
+            font-size: 18px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .info-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card h3 i {
+            color: #ea580c;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            font-size: 16px;
+            color: #4b5563;
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .info-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .level-info {
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .level-info h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .level-item {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .level-item strong {
+            color: #1f2937;
+        }
+
+        .start-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(234, 88, 12, 0.3);
+        }
+
+        /* Test Screen */
+        .test-screen {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .test-screen.active {
+            display: block;
+        }
+
+        .progress-header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .progress-count {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #ea580c 0%, #f97316 100%);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            border: 2px solid #e5e7eb;
+            margin-bottom: 30px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .difficulty-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .difficulty-a1 { background: #dbeafe; color: #1e40af; }
+        .difficulty-a2 { background: #d1fae5; color: #065f46; }
+        .difficulty-b1 { background: #fef3c7; color: #92400e; }
+        .difficulty-b2 { background: #fed7aa; color: #9a3412; }
+        .difficulty-c1 { background: #e9d5ff; color: #6b21a8; }
+        .difficulty-c2 { background: #fecaca; color: #991b1b; }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            padding: 18px 20px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #374151;
+        }
+
+        .option:hover {
+            border-color: #ea580c;
+            background: #fff7ed;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #ea580c;
+            background: #fff7ed;
+            font-weight: 600;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ea580c;
+            color: #ea580c;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .result-screen.active {
+            display: block;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result-header h2 {
+            font-size: 38px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-number {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .score-label {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .level-result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            border: 3px solid #e5e7eb;
+            margin-bottom: 25px;
+        }
+
+        .level-result-card.recommended {
+            border-color: #ea580c;
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+        }
+
+        .level-result-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .level-result-icon {
+            font-size: 48px;
+        }
+
+        .level-result-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .level-result-info p {
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .recommendation-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #ea580c;
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .level-description {
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .skills-list {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .skills-list h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .skills-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            font-size: 14px;
+            color: #4b5563;
+            padding: 6px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .skills-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #ea580c;
+            font-weight: 700;
+        }
+
+        .action-buttons-result {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-large {
+            flex: 1;
+            padding: 18px;
+            font-size: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                width: calc(100% - 80px);
+                padding: 20px;
+            }
+
+            .level-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons-result {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-sidebar">
+            <img src="/assets/image/logoengweb.png" alt="Engweb Logo" style="height: 35px;" />
+        </div>
+
+        <a href="dashboard.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="materials.html" class="menu-item active">
+            <i class="fas fa-book"></i>
+            <span>Materials</span>
+        </a>
+
+        <a href="quiz.html" class="menu-item">
+            <i class="fas fa-clipboard-check"></i>
+            <span>Quiz</span>
+        </a>
+
+        <a href="Profile.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Intro Screen -->
+        <div class="intro-screen" id="introScreen">
+            <button class="back-button" onclick="window.location.href='materials.html'">
+                <i class="fas fa-arrow-left"></i>
+                Back to Materials
+            </button>
+
+            <div class="intro-header">
+                <div class="intro-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h1>English Level Assessment</h1>
+                <p>Take this comprehensive test to determine your current English proficiency level</p>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> Test Information</h3>
+                <ul class="info-list">
+                    <li>25 multiple choice questions covering all proficiency levels</li>
+                    <li>Estimated completion time: 15-20 minutes</li>
+                    <li>Questions range from A1 (Beginner) to C2 (Mastery)</li>
+                    <li>Your results will recommend the best starting level for you</li>
+                    <li>No time limit - take your time and answer carefully</li>
+                </ul>
+            </div>
+
+            <div class="level-info">
+                <h4>CEFR Levels Covered:</h4>
+                <div class="level-grid">
+                    <div class="level-item"><strong>A1:</strong> Beginner</div>
+                    <div class="level-item"><strong>A2:</strong> Elementary</div>
+                    <div class="level-item"><strong>B1:</strong> Intermediate</div>
+                    <div class="level-item"><strong>B2:</strong> Upper-Intermediate</div>
+                    <div class="level-item"><strong>C1:</strong> Advanced</div>
+                    <div class="level-item"><strong>C2:</strong> Mastery</div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-lightbulb"></i> Tips for Best Results</h3>
+                <ul class="info-list">
+                    <li>Find a quiet place where you can concentrate</li>
+                    <li>Answer honestly - this helps us place you at the right level</li>
+                    <li>Don't use dictionaries or translation tools</li>
+                    <li>If you don't know an answer, make your best guess</li>
+                    <li>Your first instinct is usually correct</li>
+                </ul>
+            </div>
+
+            <button class="start-button" onclick="startTest()">
+                <i class="fas fa-play"></i> Start Assessment
+            </button>
+        </div>
+
+        <!-- Test Screen -->
+        <div class="test-screen" id="testScreen">
+            <button class="back-button" onclick="confirmExit()">
+                <i class="fas fa-arrow-left"></i>
+                Exit Test
+            </button>
+
+            <div class="progress-header">
+                <div class="progress-info">
+                    <span class="progress-text">Your Progress</span>
+                    <span class="progress-count" id="progressCount">Question 1 of 25</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 4%"></div>
+                </div>
+            </div>
+
+            <div class="question-card" id="questionCard">
+                <!-- Question will be inserted here -->
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="result-screen" id="resultScreen">
+            <div class="result-header">
+                <div class="result-icon">🎉</div>
+                <h2>Assessment Complete!</h2>
+                <p style="font-size: 16px; color: #6b7280;">Here are your results and recommendations</p>
+            </div>
+
+            <div class="score-card">
+                <div class="score-number" id="finalScore">0</div>
+                <div class="score-label">Correct Answers out of 25</div>
+            </div>
+
+            <div id="levelRecommendation">
+                <!-- Level recommendation will be inserted here -->
+            </div>
+
+            <div class="action-buttons-result">
+                <button class="btn btn-secondary btn-large" onclick="retakeTest()">
+                    <i class="fas fa-redo"></i> Retake Test
+                </button>
+                <button class="btn btn-primary btn-large" onclick="startLearning()">
+                    <i class="fas fa-book"></i> Start Learning
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data with different difficulty levels
+        const questions = [
+            // A1 Level (Questions 1-5)
+            {
+                level: "A1",
+                question: "Hello! My name ___ Maria.",
+                options: ["am", "is", "are", "be"],
+                correct: 1
+            },
+            {
+                level: "A1",
+                question: "What is this? It's ___ apple.",
+                options: ["a", "an", "the", "some"],
+                correct: 1
+            },
+            {
+                level: "A1",
+                question: "I ___ to school every day.",
+                options: ["go", "goes", "going", "went"],
+                correct: 0
+            },
+            {
+                level: "A1",
+                question: "She ___ from Japan.",
+                options: ["am", "is", "are", "be"],
+                correct: 1
+            },
+            {
+                level: "A1",
+                question: "How many ___ do you have?",
+                options: ["book", "books", "a book", "the books"],
+                correct: 1
+            },
+            
+            // A2 Level (Questions 6-10)
+            {
+                level: "A2",
+                question: "I usually ___ breakfast at 7 o'clock.",
+                options: ["have", "am having", "had", "has"],
+                correct: 0
+            },
+            {
+                level: "A2",
+                question: "We ___ to the cinema last night.",
+                options: ["go", "goes", "went", "going"],
+                correct: 2
+            },
+            {
+                level: "A2",
+                question: "There ___ a lot of people at the party yesterday.",
+                options: ["is", "are", "was", "were"],
+                correct: 3
+            },
+            {
+                level: "A2",
+                question: "Can you help me? I can't find ___ keys.",
+                options: ["my", "mine", "me", "I"],
+                correct: 0
+            },
+            {
+                level: "A2",
+                question: "She's ___ than her sister.",
+                options: ["tall", "taller", "tallest", "more tall"],
+                correct: 1
+            },
+            
+            // B1 Level (Questions 11-15)
+            {
+                level: "B1",
+                question: "If I ___ enough money, I would buy a new car.",
+                options: ["have", "had", "has", "having"],
+                correct: 1
+            },
+            {
+                level: "B1",
+                question: "The report ___ by tomorrow morning.",
+                options: ["must finish", "must be finished", "must finishing", "must finished"],
+                correct: 1
+            },
+            {
+                level: "B1",
+                question: "I've been learning English ___ three years.",
+                options: ["since", "for", "during", "while"],
+                correct: 1
+            },
+            {
+                level: "B1",
+                question: "By the time we arrived, the movie ___ already ___.",
+                options: ["has / started", "had / started", "have / started", "was / starting"],
+                correct: 1
+            },
+            {
+                level: "B1",
+                question: "The teacher suggested ___ more practice exercises.",
+                options: ["to do", "doing", "do", "done"],
+                correct: 1
+            },
+            
+            // B2 Level (Questions 16-19)
+            {
+                level: "B2",
+                question: "Despite ___ hard, he didn't pass the exam.",
+                options: ["study", "studied", "studying", "to study"],
+                correct: 2
+            },
+            {
+                level: "B2",
+                question: "The company is ___ expanding its operations overseas.",
+                options: ["considering", "considering to", "consider", "considered"],
+                correct: 0
+            },
+            {
+                level: "B2",
+                question: "Had I known about the traffic, I ___ earlier.",
+                options: ["would leave", "would have left", "will leave", "had left"],
+                correct: 1
+            },
+            {
+                level: "B2",
+                question: "The research findings ___ to be groundbreaking.",
+                options: ["are proved", "have proved", "have been proved", "proving"],
+                correct: 1
+            },
+            
+            // C1 Level (Questions 20-23)
+            {
+                level: "C1",
+                question: "The politician's speech was ___ with references to historical events.",
+                options: ["littered", "peppered", "scattered", "sprinkled"],
+                correct: 1
+            },
+            {
+                level: "C1",
+                question: "___ the circumstances, I think we handled the situation admirably.",
+                options: ["Giving", "Given", "Give", "To give"],
+                correct: 1
+            },
+            {
+                level: "C1",
+                question: "The novel explores the ___ nature of human relationships in modern society.",
+                options: ["complicated", "complex", "intricate", "convoluted"],
+                correct: 2
+            },
+            {
+                level: "C1",
+                question: "Little ___ that their decision would have such far-reaching consequences.",
+                options: ["they knew", "did they know", "they did know", "knew they"],
+                correct: 1
+            },
+            
+            // C2 Level (Questions 24-25)
+            {
+                level: "C2",
+                question: "The author's use of ___ language creates a dreamlike atmosphere throughout the narrative.",
+                options: ["ethereal", "vaporous", "nebulous", "transcendent"],
+                correct: 0
+            },
+            {
+                level: "C2",
+                question: "His argument, while seemingly ___, contained several logical fallacies upon closer examination.",
+                options: ["cogent", "plausible", "tenable", "coherent"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+
+        function startTest() {
+            document.getElementById('introScreen').classList.add('hidden');
+            document.getElementById('testScreen').classList.add('active');
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const q = questions[currentQuestion];
+            const card = document.getElementById('questionCard');
+            
+            card.innerHTML = `
+                <div class="question-header">
+                    <span class="question-number">Question ${currentQuestion + 1}</span>
+                    <span class="difficulty-badge difficulty-${q.level.toLowerCase()}">${q.level} Level</span>
+                </div>
+                <div class="question-text">${q.question}</div>
+                <div class="options-grid" id="optionsGrid">
+                    ${q.options.map((option, index) => `
+                        <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
+                             onclick="selectAnswer(${index})">
+                            ${String.fromCharCode(65 + index)}. ${option}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        function selectAnswer(index) {
+            userAnswers[currentQuestion] = index;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressCount').textContent = 
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = '<i class="fas fa-check"></i> Finish Test';
+            } else {
+                nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
+            }
+        }
+
+        function calculateResults() {
+            let score = 0;
+            let levelScores = { A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, C2: 0 };
+            let levelTotals = { A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, C2: 0 };
+
+            questions.forEach((q, index) => {
+                levelTotals[q.level]++;
+                if (userAnswers[index] === q.correct) {
+                    score++;
+                    levelScores[q.level]++;
+                }
+            });
+
+            // Calculate percentage for each level
+            const levelPercentages = {};
+            Object.keys(levelScores).forEach(level => {
+                levelPercentages[level] = (levelScores[level] / levelTotals[level]) * 100;
+            });
+
+            return { score, levelPercentages, levelScores, levelTotals };
+        }
+
+        function determineLevel(results) {
+            const { levelPercentages, score } = results;
+
+            // Determine recommended level based on performance
+            if (score <= 5) return "Beginner";
+            if (score <= 10) return "Elementary";
+            
+            // Check if user is comfortable with B1
+            if (levelPercentages.A1 >= 80 && levelPercentages.A2 >= 60 && score <= 15) {
+                return "Intermediate";
+            }
+            
+            // Check if user is comfortable with B2
+            if (levelPercentages.B1 >= 60 && score <= 19) {
+                return "Upper-Intermediate";
+            }
+            
+            // Check if user is comfortable with C1
+            if (levelPercentages.B2 >= 60 && score <= 23) {
+                return "Advanced";
+            }
+            
+            // If answered most questions correctly
+            if (score >= 24) {
+                return "Mastery";
+            }
+
+            return "Intermediate";
+        }
+
+        function showResults() {
+            const results = calculateResults();
+            const recommendedLevel = determineLevel(results);
+
+            document.getElementById('testScreen').classList.remove('active');
+            document.getElementById('resultScreen').classList.add('active');
+            document.getElementById('finalScore').textContent = results.score;
+
+            const levelInfo = {
+                "Beginner": {
+                    icon: "🌱",
+                    cefr: "A1",
+                    description: "You're just starting your English journey. Focus on building a strong foundation with basic vocabulary, simple grammar, and everyday phrases.",
+                    skills: [
+                        "Learn basic greetings and introductions",
+                        "Master simple present tense",
+                        "Build essential vocabulary (numbers, colors, family)",
+                        "Practice basic conversations"
+                    ]
+                },
+                "Elementary": {
+                    icon: "🌿",
+                    cefr: "A2",
+                    description: "You have a basic understanding of English. Continue building your vocabulary and start working on more complex sentence structures.",
+                    skills: [
+                        "Expand your vocabulary range",
+                        "Learn past and future tenses",
+                        "Improve reading comprehension",
+                        "Practice describing experiences"
+                    ]
+                },
+                "Intermediate": {
+                    icon: "📈",
+                    cefr: "B1",
+                    description: "You can handle most everyday situations in English. Focus on fluency, expanding your vocabulary, and tackling more complex grammar.",
+                    skills: [
+                        "Master all tense forms",
+                        "Learn conditional sentences",
+                        "Improve listening comprehension",
+                        "Practice expressing opinions"
+                    ]
+                },
+                "Upper-Intermediate": {
+                    icon: "🎯",
+                    cefr: "B2",
+                    description: "You're approaching fluency! Work on nuanced language use, idiomatic expressions, and professional communication.",
+                    skills: [
+                        "Master advanced grammar structures",
+                        "Learn idiomatic expressions",
+                        "Improve business English",
+                        "Practice academic writing"
+                    ]
+                },
+                "Advanced": {
+                    icon: "🎓",
+                    cefr: "C1",
+                    description: "Excellent! You have strong command of English. Focus on subtle nuances, advanced vocabulary, and native-like fluency.",
+                    skills: [
+                        "Master nuanced expressions",
+                        "Expand academic vocabulary",
+                        "Perfect your pronunciation",
+                        "Practice complex discussions"
+                    ]
+                },
+                "Mastery": {
+                    icon: "👑",
+                    cefr: "C2",
+                    description: "Outstanding! You have near-native proficiency. Continue refining your skills through complex materials and challenging content.",
+                    skills: [
+                        "Master sophisticated vocabulary",
+                        "Perfect all language subtleties",
+                        "Engage with native-level content",
+                        "Focus on specialized topics"
+                    ]
+                }
+            };
+
+            const info = levelInfo[recommendedLevel];
+            const recommendation = document.getElementById('levelRecommendation');
+            
+            recommendation.innerHTML = `
+                <div class="level-result-card recommended">
+                    <div class="recommendation-badge">
+                        <i class="fas fa-star"></i> Recommended Level
+                    </div>
+                    <div class="level-result-header">
+                        <div class="level-result-icon">${info.icon}</div>
+                        <div class="level-result-info">
+                            <h3>${recommendedLevel}</h3>
+                            <p>CEFR Level: ${info.cefr}</p>
+                        </div>
+                    </div>
+                    <div class="level-description">${info.description}</div>
+                    <div class="skills-list">
+                        <h4>What you'll learn:</h4>
+                        <ul>
+                            ${info.skills.map(skill => `<li>${skill}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-bar"></i> Your Performance Breakdown</h3>
+                    <div style="margin-top: 20px;">
+                        ${Object.keys(results.levelScores).map(level => `
+                            <div style="margin-bottom: 15px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span style="font-weight: 600; color: #1f2937;">${level} Level</span>
+                                    <span style="color: #6b7280;">${results.levelScores[level]}/${results.levelTotals[level]} correct</span>
+                                </div>
+                                <div style="background: #e5e7eb; height: 8px; border-radius: 10px; overflow: hidden;">
+                                    <div style="background: linear-gradient(90deg, #ea580c, #f97316); height: 100%; width: ${(results.levelScores[level] / results.levelTotals[level]) * 100}%; border-radius: 10px;"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Save recommended level
+            localStorage.setItem('recommendedLevel', recommendedLevel.toLowerCase());
+        }
+
+        function confirmExit() {
+            if (confirm('Are you sure you want to exit? Your progress will be lost.')) {
+                window.location.href = 'materials.html';
+            }
+        }
+
+        function retakeTest() {
+            currentQuestion = 0;
+            userAnswers = [];
+            document.getElementById('resultScreen').classList.remove('active');
+            document.getElementById('introScreen').classList.remove('hidden');
+        }
+
+        function startLearning() {
+            const level = localStorage.getItem('recommendedLevel') || 'beginner';
+            window.location.href = `materials-${level}.html`;
+        }
+    </script>
+</body>
+</html>

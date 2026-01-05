@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Engweb</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/src/css/dashboard.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo-sidebar">
+        <img
+          src="/assets/image/logoengweb.png
+        "
+          alt="Engweb Logo"
+        />
+      </div>
+
+      <a href="#" class="menu-item active">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="materials.html" class="menu-item">
+        <i class="fas fa-book"></i>
+        <span>Materials</span>
+      </a>
+
+      <a href="quiz.html" class="menu-item">
+        <i class="fas fa-clipboard-check"></i>
+        <span>Quiz</span>
+      </a>
+
+      <a href="Profile.html" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+
+      <div class="mascot">
+        <img src="/assets/image/pict1.png" alt="Mascot" />
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="welcome-section">
+        <div class="welcome-text">
+          <h1>WELCOME, User!</h1>
+          <h2>Keep Learning Today!</h2>
+          <p>
+            Learn English with interactive<br />materials, quizzes, and fun
+            challenges.
+          </p>
+        </div>
+
+        <img src="/assets/image/pict2.png" alt="Mascot" class="mascot-right" />
+
+        <div class="category-legend">
+          <div class="legend-item">
+            <div class="legend-color color-purple"></div>
+            <span>Vocabularies</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color color-red"></div>
+            <span>Grammar</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color color-orange"></div>
+            <span>Speaking</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color color-lime"></div>
+            <span>Listening</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color color-cyan"></div>
+            <span>Reading</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <i class="fas fa-play-circle"></i>
+            <span>On Going</span>
+          </div>
+          <div class="stat-value">12</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <i class="fas fa-check-circle"></i>
+            <span>Complete</span>
+          </div>
+          <div class="stat-value">6</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <i class="fas fa-clock"></i>
+            <span>Hour Spent</span>
+          </div>
+          <div class="stat-value">52 Hours</div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Charts</div>
+          <div class="pie-chart"></div>
+        </div>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="leaderboard">
+        <h3>Leaderboard</h3>
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Grade</th>
+              <th>Points</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="user-cell">
+                  <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/150?img=1" alt="User" />
+                  </div>
+                  <span>Name</span>
+                </div>
+              </td>
+              <td>11th</td>
+              <td>33813 Xp</td>
+              <td>Upper-Intermediate</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="user-cell">
+                  <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/150?img=2" alt="User" />
+                  </div>
+                  <span>Name</span>
+                </div>
+              </td>
+              <td>11th</td>
+              <td>33527 Xp</td>
+              <td>Upper-Intermediate</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="user-cell">
+                  <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/150?img=3" alt="User" />
+                  </div>
+                  <span>Name</span>
+                </div>
+              </td>
+              <td>11th</td>
+              <td>33284 Xp</td>
+              <td>Intermediate</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="/src/js/dashboard.js"> </script>
+  </body>
+</html>

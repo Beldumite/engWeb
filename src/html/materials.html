@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materials - Engweb</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        min-height: 100vh;
+        background: #f5f7fa;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background: linear-gradient(180deg, #2b7db3 0%, #1a5a85 100%);
+        color: white;
+        padding: 30px 0;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .logo-sidebar {
+        background: white;
+        border-radius: 15px;
+        padding: 12px 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 20px 50px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: fit-content;
+      }
+
+      .logo-sidebar img {
+        height: 35px;
+        width: auto;
+      }
+
+      .menu-item {
+        padding: 16px 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+
+      .menu-item:hover,
+      .menu-item.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+      }
+
+      .menu-item i {
+        font-size: 20px;
+        width: 24px;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 250px;
+        padding: 40px;
+        flex: 1;
+        width: calc(100% - 250px);
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        color: #6b7280;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .back-button:hover {
+        border-color: #3b82f6;
+        color: #3b82f6;
+        transform: translateX(-5px);
+      }
+
+      /* Level Selection Screen */
+      .level-selection {
+        display: block;
+      }
+
+      .level-selection.hidden {
+        display: none;
+      }
+
+      .header-section {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .header-section h1 {
+        font-size: 48px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .header-section h1 i {
+        color: #3b82f6;
+      }
+
+      .header-section p {
+        font-size: 18px;
+        color: #6b7280;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .level-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .level-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 3px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .level-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(59, 130, 246, 0.1),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      .level-card:hover::before {
+        left: 100%;
+      }
+
+      .level-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        border-color: #3b82f6;
+      }
+
+      .level-card.beginner {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      }
+
+      .level-card.intermediate {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      }
+
+      .level-card.advanced {
+        background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+      }
+
+      .level-card.professional {
+        background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+      }
+
+      .level-card.pretest {
+        background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+      }
+
+      .level-icon {
+        font-size: 60px;
+        margin-bottom: 20px;
+        opacity: 0.9;
+      }
+
+      .level-card.beginner .level-icon {
+        color: #2563eb;
+      }
+
+      .level-card.intermediate .level-icon {
+        color: #059669;
+      }
+
+      .level-card.advanced .level-icon {
+        color: #d97706;
+      }
+
+      .level-card.professional .level-icon {
+        color: #7c3aed;
+      }
+
+      .level-card.pretest .level-icon {
+        color: #ea580c;
+      }
+
+      .level-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #1f2937;
+      }
+
+      .level-description {
+        font-size: 15px;
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .level-info {
+        font-size: 13px;
+        color: #6b7280;
+        font-weight: 500;
+      }
+
+      /* Skills Selection Screen */
+      .skills-selection {
+        display: none;
+      }
+
+      .skills-selection.active {
+        display: block;
+      }
+
+      .level-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+
+      .skills-header {
+        margin-bottom: 40px;
+      }
+
+      .skills-header h2 {
+        font-size: 38px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 10px;
+      }
+
+      .skills-header p {
+        font-size: 16px;
+        color: #6b7280;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .skill-card {
+        background: white;
+        border-radius: 20px;
+        padding: 35px 28px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 3px solid #e5e7eb;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .skill-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .skill-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        border-color: #3b82f6;
+      }
+
+      .skill-icon {
+        font-size: 50px;
+        margin-bottom: 20px;
+        color: #3b82f6;
+      }
+
+      .skill-title {
+        font-size: 22px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 10px;
+      }
+
+      .skill-subtitle {
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 15px;
+      }
+
+      .lesson-count {
+        display: inline-block;
+        padding: 6px 14px;
+        background: #eff6ff;
+        color: #3b82f6;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* Lessons Screen */
+      .lessons-screen {
+        display: none;
+      }
+
+      .lessons-screen.active {
+        display: block;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .breadcrumb a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      .lessons-header {
+        margin-bottom: 35px;
+      }
+
+      .lessons-header h3 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+
+      .lessons-header p {
+        font-size: 15px;
+        color: #6b7280;
+      }
+
+      .lessons-container {
+        display: grid;
+        gap: 20px;
+      }
+
+      .lesson-item {
+        background: white;
+        border-radius: 16px;
+        padding: 25px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid #e5e7eb;
+      }
+
+      .lesson-item:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+        transform: translateX(5px);
+      }
+
+      .lesson-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex: 1;
+      }
+
+      .lesson-number {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .lesson-info {
+        flex: 1;
+      }
+
+      .lesson-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 5px;
+      }
+
+      .lesson-meta {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .lesson-status {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .progress-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: #eff6ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 18px;
+      }
+
+      .progress-circle.completed {
+        background: #dcfce7;
+        color: #16a34a;
+      }
+
+      .lesson-arrow {
+        color: #9ca3af;
+        font-size: 20px;
+      }
+
+      .lesson-item:hover .lesson-arrow {
+        color: #3b82f6;
+        transform: translateX(5px);
+      }
+
+      /* Locked Lesson */
+      .lesson-item.locked {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .lesson-item.locked:hover {
+        transform: none;
+        border-color: #e5e7eb;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 80px;
+        }
+
+        .main-content {
+          margin-left: 80px;
+          width: calc(100% - 80px);
+          padding: 20px;
+        }
+
+        .logo-sidebar,
+        .menu-item span {
+          display: none;
+        }
+
+        .menu-item {
+          justify-content: center;
+          padding: 16px;
+        }
+
+        .header-section h1 {
+          font-size: 36px;
+        }
+
+        .level-options {
+          grid-template-columns: 1fr;
+        }
+
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .level-card,
+      .skill-card,
+      .lesson-item {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .level-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .level-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .level-card:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .level-card:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .level-card:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+
+      .skill-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .skill-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .skill-card:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .skill-card:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .skill-card:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo-sidebar">
+        <img src="/assets/image/logoengweb.png" alt="Engweb Logo" />
+      </div>
+
+      <a href="dashboard.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="materials.html" class="menu-item active">
+        <i class="fas fa-book"></i>
+        <span>Materials</span>
+      </a>
+
+      <a href="quiz.html" class="menu-item">
+        <i class="fas fa-clipboard-check"></i>
+        <span>Quiz</span>
+      </a>
+
+      <a href="Profile.html" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <a href="materials.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Materials
+      </a>
+
+      <!-- Level Selection Screen -->
+      <div class="level-selection" id="levelSelection">
+        <div class="header-section">
+          <h1><i class="fas fa-hand-peace"></i> Materials</h1>
+          <p>
+            Choose your level to start learning in English or take the Pre-Test
+          </p>
+        </div>
+
+        <div class="level-options">
+          <div class="level-card beginner" data-level="beginner">
+            <div class="level-icon"><i class="fas fa-seedling"></i></div>
+            <div class="level-title">Beginner</div>
+            <div class="level-description">
+              Start from the basics. Perfect for those who are just beginning
+              their English journey.
+            </div>
+            <div class="level-info">CEFR Level: A1</div>
+          </div>
+
+          <div class="level-card intermediate" data-level="intermediate">
+            <div class="level-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="level-title">Intermediate</div>
+            <div class="level-description">
+              Build on your foundation. Ideal for learners with some English
+              experience.
+            </div>
+            <div class="level-info">CEFR Level: A2-B1</div>
+          </div>
+
+          <div class="level-card advanced" data-level="advanced">
+            <div class="level-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="level-title">Advanced</div>
+            <div class="level-description">
+              Enhance your skills. For confident English users wanting to reach
+              fluency.
+            </div>
+            <div class="level-info">CEFR Level: B2-C1</div>
+          </div>
+
+          <div class="level-card professional" data-level="professional">
+            <div class="level-icon"><i class="fas fa-crown"></i></div>
+            <div class="level-title">Professional</div>
+            <div class="level-description">
+              Master the language. Designed for advanced learners seeking
+              native-like proficiency.
+            </div>
+            <div class="level-info">CEFR Level: C2</div>
+          </div>
+
+          <div class="level-card pretest" data-level="pretest">
+            <div class="level-icon"><i class="fas fa-clipboard-list"></i></div>
+            <div class="level-title">Take Pre-Test</div>
+            <div class="level-description">
+              Not sure about your level? Take our assessment to find the perfect
+              starting point.
+            </div>
+            <div class="level-info">15-20 minutes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Selection Screen -->
+      <div class="skills-selection" id="skillsSelection">
+        <div class="level-badge" id="currentLevelBadge">
+          <i class="fas fa-award"></i>
+          <span id="levelText">Beginner Level</span>
+        </div>
+
+        <div class="skills-header">
+          <h2>Choose Your Learning Path</h2>
+          <p>Select a skill area to start your lessons</p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card" data-skill="listening">
+            <div class="skill-icon"><i class="fas fa-headphones"></i></div>
+            <div class="skill-title">Listening</div>
+            <div class="skill-subtitle">Improve your comprehension</div>
+            <div class="lesson-count">8 Lessons</div>
+          </div>
+
+          <div class="skill-card" data-skill="reading">
+            <div class="skill-icon"><i class="fas fa-book-reader"></i></div>
+            <div class="skill-title">Reading</div>
+            <div class="skill-subtitle">Enhance your reading skills</div>
+            <div class="lesson-count">10 Lessons</div>
+          </div>
+
+          <div class="skill-card" data-skill="writing">
+            <div class="skill-icon"><i class="fas fa-pen-fancy"></i></div>
+            <div class="skill-title">Writing</div>
+            <div class="skill-subtitle">Express yourself in writing</div>
+            <div class="lesson-count">7 Lessons</div>
+          </div>
+
+          <div class="skill-card" data-skill="grammar">
+            <div class="skill-icon"><i class="fas fa-language"></i></div>
+            <div class="skill-title">Grammar</div>
+            <div class="skill-subtitle">Master the rules</div>
+            <div class="lesson-count">12 Lessons</div>
+          </div>
+
+          <div class="skill-card" data-skill="vocabulary">
+            <div class="skill-icon"><i class="fas fa-spell-check"></i></div>
+            <div class="skill-title">Vocabulary</div>
+            <div class="skill-subtitle">Expand your word bank</div>
+            <div class="lesson-count">15 Lessons</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lessons Screen -->
+      <div class="lessons-screen" id="lessonsScreen">
+        <div class="breadcrumb">
+          <a href="#" id="breadcrumbHome">Greetings</a>
+          <span>/</span>
+          <a href="#" id="breadcrumbLevel">Beginner</a>
+          <span>/</span>
+          <span id="breadcrumbSkill">Vocabulary</span>
+        </div>
+
+        <div class="lessons-header">
+          <h3 id="lessonsTitle">Vocabulary Lessons</h3>
+          <p id="lessonsDescription">
+            Master essential vocabulary for greetings and introductions
+          </p>
+        </div>
+
+        <div class="lessons-container" id="lessonsContainer">
+          <!-- Lessons will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Data structure for lessons
+      const lessonsData = {
+        beginner: {
+          listening: [
+            {
+              title: "Basic Greetings Audio",
+              description: "Listen to common greetings",
+              duration: "5 min",
+            },
+            {
+              title: "Introduction Conversations",
+              description: "Real-life greeting scenarios",
+              duration: "8 min",
+            },
+            {
+              title: "Pronunciation Practice",
+              description: "Learn correct pronunciation",
+              duration: "6 min",
+            },
+            {
+              title: "Formal vs Informal",
+              description: "Understanding context",
+              duration: "7 min",
+            },
+            {
+              title: "Meeting People",
+              description: "First impression conversations",
+              duration: "10 min",
+            },
+          ],
+          reading: [
+            {
+              title: "Greeting Dialogues",
+              description: "Read common greeting exchanges",
+              duration: "4 min",
+            },
+            {
+              title: "Introduction Passages",
+              description: "Self-introduction texts",
+              duration: "5 min",
+            },
+            {
+              title: "Formal Letters",
+              description: "Opening greetings in emails",
+              duration: "6 min",
+            },
+            {
+              title: "Cultural Differences",
+              description: "Greetings around the world",
+              duration: "8 min",
+            },
+          ],
+          writing: [
+            {
+              title: "Write Your Introduction",
+              description: "Practice self-introduction",
+              duration: "10 min",
+            },
+            {
+              title: "Greeting Cards",
+              description: "Write simple greeting cards",
+              duration: "8 min",
+            },
+            {
+              title: "Email Greetings",
+              description: "Professional email openings",
+              duration: "7 min",
+            },
+            {
+              title: "Social Media Intro",
+              description: "Write bio and greetings",
+              duration: "6 min",
+            },
+          ],
+          grammar: [
+            {
+              title: "Present Simple for Greetings",
+              description: "Using 'to be' and 'have'",
+              duration: "8 min",
+            },
+            {
+              title: "Question Formation",
+              description: "Asking 'What', 'Where', 'How'",
+              duration: "10 min",
+            },
+            {
+              title: "Personal Pronouns",
+              description: "I, You, He, She, We, They",
+              duration: "6 min",
+            },
+            {
+              title: "Possessive Adjectives",
+              description: "My, Your, His, Her, etc.",
+              duration: "7 min",
+            },
+            {
+              title: "Basic Sentence Structure",
+              description: "Subject + Verb + Object",
+              duration: "9 min",
+            },
+          ],
+          vocabulary: [
+            {
+              title: "Common Greetings",
+              description: "Hello, Hi, Good morning, etc.",
+              duration: "5 min",
+            },
+            {
+              title: "Introducing Yourself",
+              description: "My name is, I am from, etc.",
+              duration: "6 min",
+            },
+            {
+              title: "Asking Names",
+              description: "What's your name? Nice to meet you",
+              duration: "5 min",
+            },
+            {
+              title: "Countries & Nationalities",
+              description: "Where you're from",
+              duration: "8 min",
+            },
+            {
+              title: "Occupations",
+              description: "Jobs and professions",
+              duration: "7 min",
+            },
+            {
+              title: "Age & Numbers",
+              description: "How old are you?",
+              duration: "6 min",
+            },
+            {
+              title: "Farewell Phrases",
+              description: "Goodbye, See you, Take care",
+              duration: "5 min",
+            },
+          ],
+        },
+        intermediate: {
+          listening: [
+            {
+              title: "Business Introductions",
+              description: "Professional networking scenarios (A2)",
+              duration: "10 min",
+            },
+            {
+              title: "Small Talk Topics",
+              description: "Weather, hobbies, weekend plans (A2)",
+              duration: "12 min",
+            },
+            {
+              title: "Phone Conversations",
+              description: "Greeting on calls (B1)",
+              duration: "9 min",
+            },
+            {
+              title: "Group Introductions",
+              description: "Meeting multiple people (B1)",
+              duration: "11 min",
+            },
+          ],
+          vocabulary: [
+            {
+              title: "Professional Greetings",
+              description: "Business context vocabulary (A2)",
+              duration: "8 min",
+            },
+            {
+              title: "Social Expressions",
+              description: "Casual and friendly phrases (A2)",
+              duration: "7 min",
+            },
+            {
+              title: "Cultural Etiquette",
+              description: "Appropriate greetings (B1)",
+              duration: "10 min",
+            },
+            {
+              title: "Idiomatic Expressions",
+              description: "Common greeting idioms (B1)",
+              duration: "9 min",
+            },
+          ],
+        },
+        advanced: {
+          vocabulary: [
+            {
+              title: "Sophisticated Greetings",
+              description: "Formal and eloquent expressions (B2)",
+              duration: "10 min",
+            },
+            {
+              title: "Networking Language",
+              description: "Professional event conversations (B2)",
+              duration: "12 min",
+            },
+            {
+              title: "Cross-cultural Communication",
+              description: "International business etiquette (C1)",
+              duration: "15 min",
+            },
+            {
+              title: "Nuanced Expressions",
+              description: "Subtle meanings in greetings (C1)",
+              duration: "13 min",
+            },
+          ],
+        },
+        professional: {
+          vocabulary: [
+            {
+              title: "Diplomatic Language",
+              description: "High-level formal greetings (C2)",
+              duration: "15 min",
+            },
+            {
+              title: "Executive Communication",
+              description: "C-suite introductions (C2)",
+              duration: "14 min",
+            },
+            {
+              title: "Academic Discourse",
+              description: "Conference and symposium language (C2)",
+              duration: "16 min",
+            },
+          ],
+        },
+      };
+
+      let currentLevel = "";
+      let currentSkill = "";
+
+      // Level Selection
+      document.querySelectorAll(".level-card").forEach((card) => {
+        card.addEventListener("click", function () {
+          const level = this.dataset.level;
+
+          // Redirect khusus untuk Pre-Test, Beginner, dan Intermediate
+          if (level === "pretest") {
+            window.location.href = "pretes.html";
+            return;
+          }
+
+          if (level === "beginner") {
+            window.location.href = "materials-beginner.html";
+            return;
+          }
+
+          if (level === "intermediate") {
+            window.location.href = "materials-intermediate.html";
+            return;
+          }
+
+          // Untuk level lain, lanjutkan ke skills selection
+          currentLevel = level;
+
+          const levelNames = {
+            beginner: "Beginner Level",
+            intermediate: "Intermediate Level",
+            advanced: "Advanced Level",
+            professional: "Professional Level",
+          };
+
+          document.getElementById("levelText").textContent = levelNames[level];
+
+          document.getElementById("levelSelection").classList.add("hidden");
+          document.getElementById("skillsSelection").classList.add("active");
+        });
+      });
+
+      // Skills Selection
+      document.querySelectorAll(".skill-card").forEach((card) => {
+        card.addEventListener("click", function () {
+          const skill = this.dataset.skill;
+          currentSkill = skill;
+
+          // Update breadcrumb
+          document.getElementById("breadcrumbLevel").textContent =
+            currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
+          document.getElementById("breadcrumbSkill").textContent =
+            skill.charAt(0).toUpperCase() + skill.slice(1);
+
+          // Update lessons header
+          const skillNames = {
+            listening: "Listening",
+            reading: "Reading",
+            writing: "Writing",
+            grammar: "Grammar",
+            vocabulary: "Vocabulary",
+          };
+
+          document.getElementById("lessonsTitle").textContent =
+            skillNames[skill] + " Lessons";
+          document.getElementById(
+            "lessonsDescription"
+          ).textContent = `Master ${skill} skills for greetings and introductions`;
+
+          // Load lessons
+          loadLessons(currentLevel, skill);
+
+          // Hide skills, show lessons
+          document.getElementById("skillsSelection").classList.remove("active");
+          document.getElementById("lessonsScreen").classList.add("active");
+        });
+      });
+
+      // Load Lessons Function
+      function loadLessons(level, skill) {
+        const container = document.getElementById("lessonsContainer");
+        container.innerHTML = "";
+
+        const lessons = lessonsData[level]?.[skill] || [];
+
+        lessons.forEach((lesson, index) => {
+          const isCompleted = index === 0; // First lesson completed as example
+          const isLocked = index > 2; // Lessons after 3rd are locked as example
+
+          const lessonHTML = `
+                    <div class="lesson-item ${
+                      isLocked ? "locked" : ""
+                    }" onclick="${!isLocked ? `startLesson(${index})` : ""}">
+                        <div class="lesson-left">
+                            <div class="lesson-number">${index + 1}</div>
+                            <div class="lesson-info">
+                                <div class="lesson-title">${lesson.title}</div>
+                                <div class="lesson-meta">${
+                                  lesson.description
+                                } • ${lesson.duration}</div>
+                            </div>
+                        </div>
+                        <div class="lesson-status">
+                            <div class="progress-circle ${
+                              isCompleted ? "completed" : ""
+                            }">
+                                ${
+                                  isLocked
+                                    ? '<i class="fas fa-lock"></i>'
+                                    : isCompleted
+                                    ? '<i class="fas fa-check"></i>'
+                                    : '<i class="fas fa-play"></i>'
+                                }
+                            </div>
+                            <div class="lesson-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+          container.innerHTML += lessonHTML;
+        });
+      }
+
+      // Start Lesson Function
+      function startLesson(lessonIndex) {
+        alert(
+          `Starting lesson ${
+            lessonIndex + 1
+          }. This will open the lesson content page.`
+        );
+        // Here you would navigate to the actual lesson content page
+      }
+
+      // Breadcrumb Navigation
+      document
+        .getElementById("breadcrumbHome")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("lessonsScreen").classList.remove("active");
+          document.getElementById("skillsSelection").classList.remove("active");
+          document.getElementById("levelSelection").classList.remove("hidden");
+        });
+
+      document
+        .getElementById("breadcrumbLevel")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("lessonsScreen").classList.remove("active");
+          document.getElementById("skillsSelection").classList.add("active");
+        });
+
+      // Back button
+      document
+        .querySelector(".back-button")
+        .addEventListener("click", function (e) {
+          if (
+            document
+              .getElementById("lessonsScreen")
+              .classList.contains("active")
+          ) {
+            e.preventDefault();
+            document.getElementById("lessonsScreen").classList.remove("active");
+            document.getElementById("skillsSelection").classList.add("active");
+          } else if (
+            document
+              .getElementById("skillsSelection")
+              .classList.contains("active")
+          ) {
+            e.preventDefault();
+            document
+              .getElementById("skillsSelection")
+              .classList.remove("active");
+            document
+              .getElementById("levelSelection")
+              .classList.remove("hidden");
+          }
+        });
+    </script>
+  </body>
+</html>

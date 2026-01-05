@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intermediate Materials - Engweb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #059669 0%, #047857 100%);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 12px 25px;
+            margin: 0 20px 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item {
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            width: calc(100% - 250px);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            color: #6b7280;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            border-color: #059669;
+            color: #059669;
+            transform: translateX(-5px);
+        }
+
+        /* Lessons List Screen */
+        .lessons-list-screen {
+            display: block;
+        }
+
+        .lessons-list-screen.hidden {
+            display: none;
+        }
+
+        .header-section {
+            margin-bottom: 40px;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .header-section h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .lessons-grid {
+            display: grid;
+            gap: 20px;
+            max-width: 900px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .lesson-card:hover {
+            border-color: #059669;
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.1);
+            transform: translateX(5px);
+        }
+
+        .lesson-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .lesson-card.locked:hover {
+            transform: none;
+            border-color: #e5e7eb;
+        }
+
+        .lesson-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .lesson-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .lesson-card.locked .lesson-number {
+            background: #e5e7eb;
+            color: #9ca3af;
+        }
+
+        .lesson-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .lesson-info p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .lesson-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lesson-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #d1fae5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .lesson-card.completed .progress-circle {
+            background: #dcfce7;
+        }
+
+        .lesson-card.completed .progress-text {
+            color: #16a34a;
+        }
+
+        /* Lesson Detail Screen */
+        .lesson-detail-screen {
+            display: none;
+        }
+
+        .lesson-detail-screen.active {
+            display: block;
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            border-radius: 20px;
+            padding: 35px;
+            color: white;
+            margin-bottom: 35px;
+        }
+
+        .lesson-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .lesson-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .lesson-progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .lesson-progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #e5e7eb;
+            position: relative;
+        }
+
+        .section-card:hover {
+            border-color: #059669;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.1);
+        }
+
+        .section-card.completed {
+            border-color: #10b981;
+        }
+
+        .section-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .section-card.locked:hover {
+            transform: none;
+            border-color: #e5e7eb;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .section-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .section-card.completed .section-number {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .section-card.locked .section-number {
+            background: #e5e7eb;
+            color: #9ca3af;
+        }
+
+        .section-status {
+            font-size: 24px;
+        }
+
+        .section-status.completed {
+            color: #10b981;
+        }
+
+        .section-status.locked {
+            color: #9ca3af;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .section-duration {
+            font-size: 13px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Screen */
+        .content-screen {
+            display: none;
+        }
+
+        .content-screen.active {
+            display: block;
+        }
+
+        .content-header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .content-header h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .content-header p {
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .content-body {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .vocab-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .vocab-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border-left: 4px solid #059669;
+        }
+
+        .vocab-icon {
+            font-size: 36px;
+        }
+
+        .vocab-content h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .vocab-pronunciation {
+            font-size: 14px;
+            color: #6b7280;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .vocab-meaning {
+            font-size: 15px;
+            color: #4b5563;
+            margin-bottom: 5px;
+        }
+
+        .vocab-example {
+            font-size: 14px;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .grammar-section {
+            margin-bottom: 30px;
+        }
+
+        .grammar-section h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #059669;
+        }
+
+        .grammar-content {
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .example-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #059669;
+            margin: 15px 0;
+        }
+
+        .example-box p {
+            font-size: 15px;
+            color: #065f46;
+            margin-bottom: 8px;
+        }
+
+        .example-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .audio-player {
+            background: #f9fafb;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .audio-icon {
+            font-size: 48px;
+            color: #059669;
+            margin-bottom: 15px;
+        }
+
+        .play-button {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+        }
+
+        .reading-text {
+            font-size: 17px;
+            color: #374151;
+            line-height: 2;
+            margin-bottom: 25px;
+        }
+
+        .reading-text p {
+            margin-bottom: 20px;
+        }
+
+        .comprehension-questions {
+            margin-top: 30px;
+        }
+
+        .comprehension-questions h5 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        .question-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .question-item p {
+            font-size: 16px;
+            color: #1f2937;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .review-summary {
+            display: grid;
+            gap: 20px;
+        }
+
+        .review-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #059669;
+        }
+
+        .review-item h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .review-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .review-item li {
+            font-size: 15px;
+            color: #4b5563;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .review-item li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .test-container {
+            max-width: 800px;
+        }
+
+        .test-question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .test-question h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .test-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .test-option {
+            padding: 15px 20px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .test-option:hover {
+            border-color: #059669;
+            background: #d1fae5;
+        }
+
+        .test-option.selected {
+            border-color: #059669;
+            background: #d1fae5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            border-color: #059669;
+            color: #059669;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                width: calc(100% - 80px);
+                padding: 20px;
+            }
+
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-sidebar">
+            <img src="/assets/image/logoengweb.png" alt="Engweb Logo" style="height: 35px;" />
+        </div>
+
+        <a href="dashboard.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="materials.html" class="menu-item active">
+            <i class="fas fa-book"></i>
+            <span>Materials</span>
+        </a>
+
+        <a href="quiz.html" class="menu-item">
+            <i class="fas fa-clipboard-check"></i>
+            <span>Quiz</span>
+        </a>
+
+        <a href="Profile.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Lessons List Screen -->
+        <div class="lessons-list-screen" id="lessonsListScreen">
+            <button class="back-button" onclick="window.location.href='materials.html'">
+                <i class="fas fa-arrow-left"></i>
+                Back to Materials
+            </button>
+
+            <div class="header-section">
+                <div class="level-badge">
+                    <i class="fas fa-chart-line"></i>
+                    Intermediate Level (A2-B1)
+                </div>
+                <h1>English Lessons</h1>
+                <p>Build on your foundation and develop confident communication skills</p>
+            </div>
+
+            <div class="lessons-grid" id="lessonsGrid">
+                <!-- Lessons will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Lesson Detail Screen -->
+        <div class="lesson-detail-screen" id="lessonDetailScreen">
+            <button class="back-button" onclick="backToLessons()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Lessons
+            </button>
+
+            <div class="lesson-header">
+                <h2 id="lessonTitle">Lesson 1: Past Experiences & Stories</h2>
+                <p id="lessonSubtitle">Learn to talk about past events and share experiences</p>
+                <div class="lesson-progress-bar">
+                    <div class="lesson-progress-fill" id="lessonProgressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="sections-grid" id="sectionsGrid">
+                <!-- Sections will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Content Screen -->
+        <div class="content-screen" id="contentScreen">
+            <button class="back-button" onclick="backToSections()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Lesson
+            </button>
+
+            <div class="content-header">
+                <h3 id="contentTitle">Vocabulary</h3>
+                <p id="contentSubtitle">Learn essential words and phrases</p>
+            </div>
+
+            <div class="content-body" id="contentBody">
+                <!-- Content will be inserted here -->
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="backToSections()">Back</button>
+                <button class="btn btn-primary" onclick="completeSection()">Complete & Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lesson data structure for Intermediate
+        const lessonsData = [
+            {
+                id: 1,
+                title: "Past Experiences & Stories",
+                description: "Talk about past events and share experiences",
+                topics: "Past Simple, Time expressions",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 2,
+                title: "Making Plans & Arrangements",
+                description: "Discuss future plans and make appointments",
+                topics: "Future forms, Will vs Going to",
+                duration: "55 min",
+                totalSections: 6
+            },
+            {
+                id: 3,
+                title: "Describing People & Places",
+                description: "Give detailed descriptions using adjectives",
+                topics: "Adjectives, Comparatives, Superlatives",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 4,
+                title: "At the Restaurant",
+                description: "Order food and handle restaurant situations",
+                topics: "Food vocabulary, Polite requests",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 5,
+                title: "Travel & Tourism",
+                description: "Navigate travel situations and discuss trips",
+                topics: "Travel vocabulary, Present Perfect",
+                duration: "55 min",
+                totalSections: 6
+            },
+            {
+                id: 6,
+                title: "Health & Medical Care",
+                description: "Describe symptoms and understand medical advice",
+                topics: "Body parts, Health problems, Should/Must",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 7,
+                title: "Work & Career",
+                description: "Discuss jobs, responsibilities, and workplace",
+                topics: "Job vocabulary, Present Perfect Continuous",
+                duration: "55 min",
+                totalSections: 6
+            },
+            {
+                id: 8,
+                title: "Technology & Communication",
+                description: "Talk about modern technology and devices",
+                topics: "Tech vocabulary, Passive voice",
+                duration: "50 min",
+                totalSections: 6
+            },
+            {
+                id: 9,
+                title: "Environment & Nature",
+                description: "Discuss environmental issues and nature",
+                topics: "Environment vocabulary, Conditionals (Type 1)",
+                duration: "55 min",
+                totalSections: 6
+            },
+            {
+                id: 10,
+                title: "Opinions & Preferences",
+                description: "Express opinions and explain preferences",
+                topics: "Opinion phrases, Linking words",
+                duration: "50 min",
+                totalSections: 6
+            }
+        ];
+
+        const sectionTypes = [
+            { id: 1, name: "Vocabulary", icon: "fas fa-spell-check", duration: "10 min" },
+            { id: 2, name: "Grammar", icon: "fas fa-language", duration: "12 min" },
+            { id: 3, name: "Listening", icon: "fas fa-headphones", duration: "10 min" },
+            { id: 4, name: "Reading", icon: "fas fa-book-reader", duration: "12 min" },
+            { id: 5, name: "Lesson Review", icon: "fas fa-clipboard-list", duration: "6 min" },
+            { id: 6, name: "Lesson Test", icon: "fas fa-clipboard-check", duration: "10 min" }
+        ];
+
+        let userProgress = {
+            completedLessons: [],
+            currentLesson: 1,
+            lessonProgress: {
+                1: { completedSections: [] }
+            }
+        };
+
+        let currentLesson = null;
+        let currentSection = null;
+
+        renderLessons();
+
+        function renderLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            grid.innerHTML = '';
+
+            lessonsData.forEach(lesson => {
+                const isCompleted = userProgress.completedLessons.includes(lesson.id);
+                const isLocked = lesson.id > userProgress.currentLesson;
+                const progress = calculateLessonProgress(lesson.id);
+
+                const card = document.createElement('div');
+                card.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                card.onclick = !isLocked ? () => openLesson(lesson.id) : null;
+
+                card.innerHTML = `
+                    <div class="lesson-left">
+                        <div class="lesson-number">${isLocked ? '<i class="fas fa-lock"></i>' : lesson.id}</div>
+                        <div class="lesson-info">
+                            <h3>${lesson.title}</h3>
+                            <p>${lesson.description}</p>
+                            <div class="lesson-meta">
+                                <span><i class="fas fa-book"></i> ${lesson.topics}</span>
+                                <span><i class="fas fa-clock"></i> ${lesson.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress">
+                        <div class="progress-circle">
+                            <span class="progress-text">${progress}%</span>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: #9ca3af; font-size: 20px;"></i>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function calculateLessonProgress(lessonId) {
+            const sections = userProgress.lessonProgress[lessonId]?.completedSections || [];
+            return Math.round((sections.length / 6) * 100);
+        }
+
+        function openLesson(lessonId) {
+            currentLesson = lessonsData.find(l => l.id === lessonId);
+            
+            document.getElementById('lessonTitle').textContent = `Lesson ${currentLesson.id}: ${currentLesson.title}`;
+            document.getElementById('lessonSubtitle').textContent = currentLesson.description;
+            
+            const progress = calculateLessonProgress(lessonId);
+            document.getElementById('lessonProgressFill').style.width = progress + '%';
+
+            renderSections();
+            
+            document.getElementById('lessonsListScreen').classList.add('hidden');
+            document.getElementById('lessonDetailScreen').classList.add('active');
+        }
+
+        function renderSections() {
+            const grid = document.getElementById('sectionsGrid');
+            grid.innerHTML = '';
+
+            const completedSections = userProgress.lessonProgress[currentLesson.id]?.completedSections || [];
+
+            sectionTypes.forEach((section, index) => {
+                const isCompleted = completedSections.includes(section.id);
+                const isLocked = index > 0 && !completedSections.includes(index);
+
+                const card = document.createElement('div');
+                card.className = `section-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                card.onclick = !isLocked ? () => openSection(section.id) : null;
+
+                card.innerHTML = `
+                    <div class="section-header">
+                        <div class="section-number">${isLocked ? '<i class="fas fa-lock"></i>' : section.id}</div>
+                        <div class="section-status ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}">
+                            ${isCompleted ? '<i class="fas fa-check-circle"></i>' : (isLocked ? '<i class="fas fa-lock"></i>' : '<i class="fas fa-play-circle"></i>')}
+                        </div>
+                    </div>
+                    <div class="section-title">${section.name}</div>
+                    <div class="section-description">Master ${section.name.toLowerCase()} skills</div>
+                    <div class="section-duration">
+                        <i class="fas fa-clock"></i>
+                        ${section.duration}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openSection(sectionId) {
+            currentSection = sectionTypes.find(s => s.id === sectionId);
+            
+            document.getElementById('contentTitle').textContent = currentSection.name;
+            document.getElementById('contentSubtitle').textContent = `Learn ${currentSection.name.toLowerCase()} for ${currentLesson.title}`;
+            
+            renderSectionContent(sectionId);
+            
+            document.getElementById('lessonDetailScreen').classList.remove('active');
+            document.getElementById('contentScreen').classList.add('active');
+        }
+
+        function renderSectionContent(sectionId) {
+            const body = document.getElementById('contentBody');
+            
+            if (currentLesson.id === 1) {
+                // Lesson 1: Past Experiences & Stories content (A2-B1)
+                if (sectionId === 1) {
+                    body.innerHTML = `
+                        <div class="vocab-list">
+                            <div class="vocab-item">
+                                <div class="vocab-icon">⏰</div>
+                                <div class="vocab-content">
+                                    <h4>Yesterday</h4>
+                                    <div class="vocab-pronunciation">/ˈjestərdeɪ/</div>
+                                    <div class="vocab-meaning">Kemarin - Menunjukkan hari sebelum hari ini</div>
+                                    <div class="vocab-example">Example: "I visited my grandmother yesterday."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">📅</div>
+                                <div class="vocab-content">
+                                    <h4>Last week/month/year</h4>
+                                    <div class="vocab-pronunciation">/lɑːst wiːk/mʌnθ/jɪər/</div>
+                                    <div class="vocab-meaning">Minggu/bulan/tahun lalu - Time expressions untuk masa lampau</div>
+                                    <div class="vocab-example">Example: "We traveled to Bali last month."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🕐</div>
+                                <div class="vocab-content">
+                                    <h4>Ago</h4>
+                                    <div class="vocab-pronunciation">/əˈɡoʊ/</div>
+                                    <div class="vocab-meaning">Yang lalu - Digunakan setelah periode waktu (two days ago, three weeks ago)</div>
+                                    <div class="vocab-example">Example: "She graduated from university two years ago."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🎬</div>
+                                <div class="vocab-content">
+                                    <h4>Went (go)</h4>
+                                    <div class="vocab-pronunciation">/went/</div>
+                                    <div class="vocab-meaning">Pergi (bentuk past) - Irregular verb untuk menunjukkan perpindahan tempat</div>
+                                    <div class="vocab-example">Example: "We went to the cinema last Saturday."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">👀</div>
+                                <div class="vocab-content">
+                                    <h4>Saw (see)</h4>
+                                    <div class="vocab-pronunciation">/sɔː/</div>
+                                    <div class="vocab-meaning">Melihat (bentuk past) - Irregular verb</div>
+                                    <div class="vocab-example">Example: "I saw an interesting movie last night."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🗣️</div>
+                                <div class="vocab-content">
+                                    <h4>Told (tell)</h4>
+                                    <div class="vocab-pronunciation">/toʊld/</div>
+                                    <div class="vocab-meaning">Memberitahu (bentuk past) - Irregular verb untuk menceritakan</div>
+                                    <div class="vocab-example">Example: "He told me an interesting story about his trip."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">🎉</div>
+                                <div class="vocab-content">
+                                    <h4>Had (have)</h4>
+                                    <div class="vocab-pronunciation">/hæd/</div>
+                                    <div class="vocab-meaning">Memiliki/mengalami (bentuk past) - Irregular verb</div>
+                                    <div class="vocab-example">Example: "We had a great time at the party."</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vocab-item">
+                                <div class="vocab-icon">💬</div>
+                                <div class="vocab-content">
+                                    <h4>Met (meet)</h4>
+                                    <div class="vocab-pronunciation">/met/</div>
+                                    <div class="vocab-meaning">Bertemu (bentuk past) - Irregular verb</div>
+                                    <div class="vocab-example">Example: "I met some old friends at the reunion yesterday."</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 2) {
+                    body.innerHTML = `
+                        <div class="grammar-section">
+                            <h4>Past Simple Tense</h4>
+                            <div class="grammar-content">
+                                <p>Past Simple digunakan untuk menceritakan kejadian yang sudah selesai di masa lampau. Ada dua jenis verb dalam Past Simple:</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p><strong>Regular Verbs (ditambah -ed)</strong></p>
+                                <p>• work → worked: I worked at a restaurant last summer.</p>
+                                <p>• visit → visited: They visited Paris three years ago.</p>
+                                <p>• play → played: We played football yesterday afternoon.</p>
+                                <p>• watch → watched: She watched a documentary last night.</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p><strong>Irregular Verbs (bentuk khusus)</strong></p>
+                                <p>• go → went: I went to the beach last weekend.</p>
+                                <p>• eat → ate: We ate sushi for dinner yesterday.</p>
+                                <p>• buy → bought: He bought a new car last month.</p>
+                                <p>• come → came: They came to my house two days ago.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Negative Form (Bentuk Negatif)</h4>
+                            <div class="grammar-content">
+                                <p>Untuk membuat kalimat negatif, gunakan: did not (didn't) + verb dasar</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p>• I didn't go to school yesterday. (bukan: I didn't went)</p>
+                                <p>• She didn't watch the movie last night.</p>
+                                <p>• We didn't visit our grandparents last week.</p>
+                                <p>• They didn't eat breakfast this morning.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Question Form (Bentuk Pertanyaan)</h4>
+                            <div class="grammar-content">
+                                <p>Untuk membuat pertanyaan: Did + subject + verb dasar?</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p>• Did you go to the party last night?</p>
+                                <p>&nbsp;&nbsp;→ Yes, I did. / No, I didn't.</p>
+                                <p></p>
+                                <p>• Did she finish her homework?</p>
+                                <p>&nbsp;&nbsp;→ Yes, she did. / No, she didn't.</p>
+                                <p></p>
+                                <p>• What did you do yesterday?</p>
+                                <p>&nbsp;&nbsp;→ I went shopping with my friends.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Time Expressions dengan Past Simple</h4>
+                            <div class="grammar-content">
+                                <p>Signal words yang sering digunakan dengan Past Simple:</p>
+                            </div>
+                            
+                            <div class="example-box">
+                                <p>• <strong>yesterday</strong> - I called him yesterday.</p>
+                                <p>• <strong>last (week/month/year)</strong> - She traveled to Japan last year.</p>
+                                <p>• <strong>ago</strong> - They moved here five years ago.</p>
+                                <p>• <strong>in + tahun</strong> - We graduated in 2020.</p>
+                                <p>• <strong>when + past event</strong> - I was happy when I saw you.</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 3) {
+                    body.innerHTML = `
+                        <div class="audio-player">
+                            <div class="audio-icon">
+                                <i class="fas fa-headphones-alt"></i>
+                            </div>
+                            <h4 style="margin-bottom: 10px;">Listening Practice: A Memorable Trip</h4>
+                            <p style="color: #6b7280; margin-bottom: 20px;">Listen to Anna talking about her vacation and answer the questions</p>
+                            <button class="play-button" onclick="alert('Audio player will play the story')">
+                                <i class="fas fa-play"></i> Play Audio
+                            </button>
+                        </div>
+                        
+                        <div class="grammar-section">
+                            <h4>Story Transcript</h4>
+                            <div class="example-box">
+                                <p><strong>Anna's Story:</strong></p>
+                                <p>"Last summer, I went on an amazing trip to Thailand with my best friend. We stayed there for two weeks. On the first day, we visited the Grand Palace in Bangkok. It was absolutely beautiful! The architecture was incredible, and we took hundreds of photos.</p>
+                                <p></p>
+                                <p>The next day, we flew to Phuket. We spent most of our time at the beach. The water was crystal clear and the sand was so white. We tried many water sports like snorkeling and kayaking. I even saw some colorful fish while snorkeling!</p>
+                                <p></p>
+                                <p>We also took a cooking class and learned how to make Pad Thai and Tom Yum soup. The food in Thailand was delicious! Every meal was an adventure.</p>
+                                <p></p>
+                                <p>On our last day, we went shopping at a night market. I bought some souvenirs for my family and friends. The vendors were very friendly, and we practiced our bargaining skills.</p>
+                                <p></p>
+                                <p>It was the best vacation I ever had. I made so many wonderful memories and I can't wait to go back someday!"</p>
+                            </div>
+                        </div>
+                        
+                        <div class="comprehension-questions">
+                            <h5>Listening Comprehension Questions:</h5>
+                            <div class="question-item">
+                                <p>1. Where did Anna go on vacation?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: Thailand</div>
+                            </div>
+                            <div class="question-item">
+                                <p>2. How long did she stay there?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: Two weeks</div>
+                            </div>
+                            <div class="question-item">
+                                <p>3. What did she visit on the first day in Bangkok?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: The Grand Palace</div>
+                            </div>
+                            <div class="question-item">
+                                <p>4. What water sports did she try?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: Snorkeling and kayaking</div>
+                            </div>
+                            <div class="question-item">
+                                <p>5. What did she learn to cook?</p>
+                                <div style="color: #059669; margin-top: 8px;">Answer: Pad Thai and Tom Yum soup</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 4) {
+                    body.innerHTML = `
+                        <div class="reading-text">
+                            <h4 style="font-size: 24px; margin-bottom: 20px; color: #1f2937;">My First Day at University</h4>
+                            
+                            <p>Three years ago, I started my journey as a university student. I remember my first day very clearly because it was both exciting and nerve-wracking.</p>
+                            
+                            <p>I woke up early that morning, around 5:30 AM, even though my first class didn't start until 8:00. I was too excited to sleep! I spent almost an hour choosing what to wear because I wanted to make a good first impression. Finally, I decided on a simple blue shirt and jeans.</p>
+                            
+                            <p>When I arrived at the campus, I felt overwhelmed. The university was huge! There were so many buildings, and I didn't know where to go. Fortunately, I met a friendly senior student who helped me find my classroom. Her name was Diana, and she gave me a campus map and some useful advice about university life.</p>
+                            
+                            <p>My first class was Introduction to Psychology. The professor, Dr. Rahman, seemed very knowledgeable and passionate about his subject. He told us interesting stories about famous psychologists and their experiments. I was fascinated! During the break, I introduced myself to some classmates. Everyone was friendly, and we exchanged phone numbers.</p>
+                            
+                            <p>At lunchtime, I went to the cafeteria with my new friends. We talked about our backgrounds, our majors, and our expectations for university life. I discovered that two of them lived in the same dormitory as me, so we decided to study together in the evening.</p>
+                            
+                            <p>After lunch, I attended two more classes: English Literature and Mathematics. Both classes were challenging, but the professors were supportive. They encouraged us to ask questions and participate in discussions.</p>
+                            
+                            <p>When I got back to my dorm room that evening, I felt tired but happy. I called my parents and told them all about my day. They were proud of me and gave me encouragement. Before I went to bed, I looked at the campus map Diana gave me and planned my route for the next day.</p>
+                            
+                            <p>Looking back now, I'm glad that my first day went so well. It set a positive tone for the rest of my university experience. I learned that it's okay to feel nervous about new experiences, and that people are usually willing to help if you just ask.</p>
+                        </div>
+                        
+                        <div class="comprehension-questions">
+                            <h5>Reading Comprehension:</h5>
+                            <div class="question-item">
+                                <p>1. When did the writer start university?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) One year ago  b) Two years ago  c) Three years ago  d) Four years ago</div>
+                            </div>
+                            <div class="question-item">
+                                <p>2. What time did the writer wake up on the first day?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) 5:00 AM  b) 5:30 AM  c) 6:00 AM  d) 8:00 AM</div>
+                            </div>
+                            <div class="question-item">
+                                <p>3. Who helped the writer find the classroom?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) A professor  b) A friend  c) A senior student  d) A security guard</div>
+                            </div>
+                            <div class="question-item">
+                                <p>4. What was the writer's first class?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) Mathematics  b) English Literature  c) Introduction to Psychology  d) History</div>
+                            </div>
+                            <div class="question-item">
+                                <p>5. How did the writer feel at the end of the day?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) Sad and lonely  b) Tired but happy  c) Angry and frustrated  d) Worried and stressed</div>
+                            </div>
+                            <div class="question-item">
+                                <p>6. What did the writer do before going to bed?</p>
+                                <div style="color: #6b7280; font-size: 14px; margin-top: 5px;">a) Studied for exams  b) Watched TV  c) Looked at the campus map  d) Went for a walk</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 5) {
+                    body.innerHTML = `
+                        <h4 style="font-size: 26px; margin-bottom: 25px; color: #1f2937;">Lesson Review</h4>
+                        
+                        <div class="review-summary">
+                            <div class="review-item">
+                                <h5>📚 Vocabulary Mastered</h5>
+                                <ul>
+                                    <li>Time expressions: yesterday, last week/month/year, ago</li>
+                                    <li>Common irregular past verbs: went, saw, told, had, met</li>
+                                    <li>Regular past verbs with -ed endings</li>
+                                    <li>Storytelling vocabulary and phrases</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>📖 Grammar Learned</h5>
+                                <ul>
+                                    <li>Past Simple tense for completed actions</li>
+                                    <li>Regular vs Irregular verbs in past form</li>
+                                    <li>Negative form: didn't + base verb</li>
+                                    <li>Question form: Did + subject + base verb?</li>
+                                    <li>Time expressions commonly used with past simple</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>🎧 Listening Skills Developed</h5>
+                                <ul>
+                                    <li>Understanding past tense narratives</li>
+                                    <li>Identifying sequence of events</li>
+                                    <li>Recognizing time expressions in context</li>
+                                    <li>Following travel stories and experiences</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>📝 Reading Comprehension</h5>
+                                <ul>
+                                    <li>Reading longer texts about past experiences</li>
+                                    <li>Understanding chronological order of events</li>
+                                    <li>Identifying main ideas and details</li>
+                                    <li>Making inferences from context</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="review-item">
+                                <h5>💡 Key Learning Outcomes</h5>
+                                <ul>
+                                    <li>You can now talk about your past experiences confidently</li>
+                                    <li>You understand how to form past simple sentences correctly</li>
+                                    <li>You can tell stories about what happened in the past</li>
+                                    <li>You're ready to share your experiences in English!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                } else if (sectionId === 6) {
+                    body.innerHTML = `
+                        <h4 style="font-size: 26px; margin-bottom: 25px; color: #1f2937;">Lesson Test</h4>
+                        <p style="color: #6b7280; margin-bottom: 30px;">Complete this test to unlock the next lesson. You need 80% to pass.</p>
+                        
+                        <div class="test-container">
+                            <div class="test-question">
+                                <h5>1. I ___ to the supermarket yesterday.</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. go</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. went</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. goes</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. going</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>2. She ___ a beautiful dress at the party last night.</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. wear</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. wears</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. wore</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. wearing</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>3. We ___ dinner at 7 PM yesterday.</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. didn't ate</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. don't eat</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. didn't eat</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. doesn't eat</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>4. ___ you visit your grandparents last weekend?</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. Do</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. Does</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. Did</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. Are</div>
+                                </div>
+                            </div>
+                            
+                            <div class="test-question">
+                                <h5>5. They moved to Jakarta three years ___.</h5>
+                                <div class="test-options">
+                                    <div class="test-option" onclick="selectOption(this)">A. before</div>
+                                    <div class="test-option" onclick="selectOption(this)">B. ago</div>
+                                    <div class="test-option" onclick="selectOption(this)">C. last</div>
+                                    <div class="test-option" onclick="selectOption(this)">D. yesterday</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        function selectOption(element) {
+            const parent = element.parentElement;
+            const options = parent.querySelectorAll('.test-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function completeSection() {
+            if (!userProgress.lessonProgress[currentLesson.id]) {
+                userProgress.lessonProgress[currentLesson.id] = { completedSections: [] };
+            }
+            
+            const completedSections = userProgress.lessonProgress[currentLesson.id].completedSections;
+            
+            if (!completedSections.includes(currentSection.id)) {
+                completedSections.push(currentSection.id);
+            }
+            
+            if (completedSections.length === 6) {
+                if (!userProgress.completedLessons.includes(currentLesson.id)) {
+                    userProgress.completedLessons.push(currentLesson.id);
+                    userProgress.currentLesson = currentLesson.id + 1;
+                    alert('🎉 Congratulations! You completed Lesson ' + currentLesson.id + '! Next lesson is now unlocked.');
+                }
+            }
+            
+            backToSections();
+        }
+
+        function backToSections() {
+            document.getElementById('contentScreen').classList.remove('active');
+            document.getElementById('lessonDetailScreen').classList.add('active');
+            renderSections();
+            
+            const progress = calculateLessonProgress(currentLesson.id);
+            document.getElementById('lessonProgressFill').style.width = progress + '%';
+        }
+
+        function backToLessons() {
+            document.getElementById('lessonDetailScreen').classList.remove('active');
+            document.getElementById('lessonsListScreen').classList.remove('hidden');
+            renderLessons();
+        }
+    </script>
+</body>
+</html>
